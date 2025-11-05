@@ -1,1 +1,1 @@
-export { default } from "E:/VUE/Mavrix_Properties/ui/node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue"
+export { default } from "E:/VUE/mvx/node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue"

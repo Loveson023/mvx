@@ -17,7 +17,7 @@ declare module "#build/nuxt-scripts-trigger-resolver.mjs";
 declare module "#build/color-mode-options.mjs";
 declare module "#build/vueformPlugin.mjs";
 declare module "#build/devtools/settings.mjs";
-declare module "#build/runtime.vue-devtools-client.fi7t6YQ_PlK9N2G_FO7JEushr3vXIw5Yk_qudLj03c0.js";
+declare module "#build/runtime.vue-devtools-client.xhOOV3lNWrRve32Wf7CuBXBsuAykZlgtKnW5VevNfx8.js";
 declare module "#build/routes.mjs";
 declare module "#build/pages.mjs";
 declare module "#build/router.options.mjs";

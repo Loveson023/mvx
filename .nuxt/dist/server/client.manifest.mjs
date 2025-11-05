@@ -1,1 +1,1 @@
-export { default } from "file:///E:/VUE/Mavrix_Properties/ui/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///E:/VUE/mvx/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
