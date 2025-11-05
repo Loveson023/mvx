@@ -1,0 +1,4917 @@
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderSlot, ssrRenderAttr, ssrRenderList, ssrInterpolate, ssrRenderClass, ssrRenderVNode } from 'vue/server-renderer';
+import { defineComponent, mergeProps, withCtx, createVNode, createBlock, openBlock, ref, computed, createTextVNode, toDisplayString, useSlots, unref, renderSlot, createCommentVNode, Fragment, renderList, inject, useId, watch, provide, toRef, resolveDynamicComponent, withModifiers, toHandlers, createSlots, useSSRContext } from 'vue';
+import { Primitive, Label, useForwardPropsEmits, AccordionTrigger, AccordionItem, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink, NavigationMenuContent, AccordionContent, AccordionRoot, NavigationMenuRoot, NavigationMenuList, NavigationMenuIndicator, NavigationMenuViewport, DropdownMenuRoot, DropdownMenuTrigger, DropdownMenuArrow } from 'reka-ui';
+import { p as publicAssetsURL, C as defu } from '../_/nitro.mjs';
+import { reactivePick, createReusableTemplate, reactiveOmit } from '@vueuse/core';
+import { i as isArrayOfArray, a as get, o as omit } from './index-3UlAPwuq.mjs';
+import { t as tv } from './tv-Dyxj8f8C.mjs';
+import { _ as _sfc_main$d, p as pickLinkProps, a as _sfc_main$1$1 } from './Link-CYf1dq5X.mjs';
+import { _ as _sfc_main$f } from './Avatar-BMtAh9aM.mjs';
+import { _ as _sfc_main$e } from './Icon-BXHY_Wln.mjs';
+import { _ as _sfc_main$g } from './Badge-DCAaSwpn.mjs';
+import { HoverCard, Popover, DropdownMenu } from 'reka-ui/namespaced';
+import { u as usePortal } from './usePortal-Brbu9lm4.mjs';
+import { e as useAppConfig } from './server.mjs';
+import { _ as _sfc_main$b, a as _sfc_main$1$2 } from './Input-LEel6pki.mjs';
+import { _ as __nuxt_component_0 } from './nuxt-link-D7qS_3ag.mjs';
+import { u as useLocale } from './useLocale-DNEMYcP0.mjs';
+import { _ as _sfc_main$h } from './Kbd-D2QeKaIj.mjs';
+import { _ as _sfc_main$c } from './Button-DdQxHajf.mjs';
+import { _ as _export_sfc } from './_plugin-vue_export-helper-1tPrXgE0.mjs';
+import { a as formErrorsInjectionKey, b as formInputsInjectionKey, i as inputIdInjectionKey, c as formFieldInjectionKey } from './useFormField-WbuSM5T2.mjs';
+import 'node:http';
+import 'node:https';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:url';
+import '@iconify/utils';
+import 'node:crypto';
+import 'consola';
+import 'node:path';
+import 'better-sqlite3';
+import 'ipx';
+import 'tailwind-variants';
+import './NuxtImg-D9WVKGOy.mjs';
+import './index-BifeFrQR.mjs';
+import '@iconify/vue';
+import '@iconify/utils/lib/css/icon';
+import './asyncData-DzZ9Lhv5.mjs';
+import 'vue-router';
+import 'tailwindcss/colors';
+import '../routes/renderer.mjs';
+import 'vue-bundle-renderer/runtime';
+import 'unhead/server';
+import 'devalue';
+import 'unhead/plugins';
+import 'unhead/utils';
+
+const theme$4 = {
+  "slots": {
+    "content": "bg-default shadow-lg rounded-md ring ring-default data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-popover-content-transform-origin) focus:outline-none pointer-events-auto",
+    "arrow": "fill-default"
+  }
+};
+const _sfc_main$a = {
+  __name: "UPopover",
+  __ssrInlineRender: true,
+  props: {
+    mode: { type: String, required: false, default: "click" },
+    content: { type: Object, required: false },
+    arrow: { type: [Boolean, Object], required: false },
+    portal: { type: [Boolean, String], required: false, skipCheck: true, default: true },
+    reference: { type: null, required: false },
+    dismissible: { type: Boolean, required: false, default: true },
+    class: { type: null, required: false },
+    ui: { type: null, required: false },
+    defaultOpen: { type: Boolean, required: false },
+    open: { type: Boolean, required: false },
+    modal: { type: Boolean, required: false },
+    openDelay: { type: Number, required: false, default: 0 },
+    closeDelay: { type: Number, required: false, default: 0 }
+  },
+  emits: ["close:prevent", "update:open"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emits = __emit;
+    const slots = useSlots();
+    const appConfig = useAppConfig();
+    const pick = props.mode === "hover" ? reactivePick(props, "defaultOpen", "open", "openDelay", "closeDelay") : reactivePick(props, "defaultOpen", "open", "modal");
+    const rootProps = useForwardPropsEmits(pick, emits);
+    const portalProps = usePortal(toRef(() => props.portal));
+    const contentProps = toRef(() => defu(props.content, { side: "bottom", sideOffset: 8, collisionPadding: 8 }));
+    const contentEvents = computed(() => {
+      if (!props.dismissible) {
+        const events = ["pointerDownOutside", "interactOutside", "escapeKeyDown"];
+        return events.reduce((acc, curr) => {
+          acc[curr] = (e) => {
+            e.preventDefault();
+            emits("close:prevent");
+          };
+          return acc;
+        }, {});
+      }
+      return {};
+    });
+    const arrowProps = toRef(() => props.arrow);
+    const ui = computed(() => tv({ extend: tv(theme$4), ...appConfig.ui?.popover || {} })({
+      side: contentProps.value.side
+    }));
+    const Component = computed(() => props.mode === "hover" ? HoverCard : Popover);
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(Component).Root, mergeProps(unref(rootProps), _attrs), {
+        default: withCtx(({ open }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (!!slots.default || !!__props.reference) {
+              _push2(ssrRenderComponent(unref(Component).Trigger, {
+                "as-child": "",
+                reference: __props.reference,
+                class: props.class
+              }, {
+                default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    ssrRenderSlot(_ctx.$slots, "default", { open }, null, _push3, _parent3, _scopeId2);
+                  } else {
+                    return [
+                      renderSlot(_ctx.$slots, "default", { open })
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            if ("Anchor" in Component.value && !!slots.anchor) {
+              _push2(ssrRenderComponent(unref(Component).Anchor, { "as-child": "" }, {
+                default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    ssrRenderSlot(_ctx.$slots, "anchor", {}, null, _push3, _parent3, _scopeId2);
+                  } else {
+                    return [
+                      renderSlot(_ctx.$slots, "anchor")
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(ssrRenderComponent(unref(Component).Portal, unref(portalProps), {
+              default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(ssrRenderComponent(unref(Component).Content, mergeProps(contentProps.value, {
+                    class: ui.value.content({ class: [!slots.default && props.class, props.ui?.content] })
+                  }, toHandlers(contentEvents.value)), {
+                    default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        ssrRenderSlot(_ctx.$slots, "content", {}, null, _push4, _parent4, _scopeId3);
+                        if (!!__props.arrow) {
+                          _push4(ssrRenderComponent(unref(Component).Arrow, mergeProps(arrowProps.value, {
+                            class: ui.value.arrow({ class: props.ui?.arrow })
+                          }), null, _parent4, _scopeId3));
+                        } else {
+                          _push4(`<!---->`);
+                        }
+                      } else {
+                        return [
+                          renderSlot(_ctx.$slots, "content"),
+                          !!__props.arrow ? (openBlock(), createBlock(unref(Component).Arrow, mergeProps({ key: 0 }, arrowProps.value, {
+                            class: ui.value.arrow({ class: props.ui?.arrow })
+                          }), null, 16, ["class"])) : createCommentVNode("", true)
+                        ];
+                      }
+                    }),
+                    _: 2
+                  }, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode(unref(Component).Content, mergeProps(contentProps.value, {
+                      class: ui.value.content({ class: [!slots.default && props.class, props.ui?.content] })
+                    }, toHandlers(contentEvents.value)), {
+                      default: withCtx(() => [
+                        renderSlot(_ctx.$slots, "content"),
+                        !!__props.arrow ? (openBlock(), createBlock(unref(Component).Arrow, mergeProps({ key: 0 }, arrowProps.value, {
+                          class: ui.value.arrow({ class: props.ui?.arrow })
+                        }), null, 16, ["class"])) : createCommentVNode("", true)
+                      ]),
+                      _: 3
+                    }, 16, ["class"])
+                  ];
+                }
+              }),
+              _: 2
+            }, _parent2, _scopeId));
+          } else {
+            return [
+              !!slots.default || !!__props.reference ? (openBlock(), createBlock(unref(Component).Trigger, {
+                key: 0,
+                "as-child": "",
+                reference: __props.reference,
+                class: props.class
+              }, {
+                default: withCtx(() => [
+                  renderSlot(_ctx.$slots, "default", { open })
+                ]),
+                _: 2
+              }, 1032, ["reference", "class"])) : createCommentVNode("", true),
+              "Anchor" in Component.value && !!slots.anchor ? (openBlock(), createBlock(unref(Component).Anchor, {
+                key: 1,
+                "as-child": ""
+              }, {
+                default: withCtx(() => [
+                  renderSlot(_ctx.$slots, "anchor")
+                ]),
+                _: 3
+              })) : createCommentVNode("", true),
+              createVNode(unref(Component).Portal, unref(portalProps), {
+                default: withCtx(() => [
+                  createVNode(unref(Component).Content, mergeProps(contentProps.value, {
+                    class: ui.value.content({ class: [!slots.default && props.class, props.ui?.content] })
+                  }, toHandlers(contentEvents.value)), {
+                    default: withCtx(() => [
+                      renderSlot(_ctx.$slots, "content"),
+                      !!__props.arrow ? (openBlock(), createBlock(unref(Component).Arrow, mergeProps({ key: 0 }, arrowProps.value, {
+                        class: ui.value.arrow({ class: props.ui?.arrow })
+                      }), null, 16, ["class"])) : createCommentVNode("", true)
+                    ]),
+                    _: 3
+                  }, 16, ["class"])
+                ]),
+                _: 3
+              }, 16)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Popover.vue");
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+};
+const theme$3 = {
+  "slots": {
+    "root": "relative flex gap-1.5 [&>div]:min-w-0",
+    "list": "isolate min-w-0",
+    "label": "w-full flex items-center gap-1.5 font-semibold text-xs/5 text-highlighted px-2.5 py-1.5",
+    "item": "min-w-0",
+    "link": "group relative w-full flex items-center gap-1.5 font-medium text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2",
+    "linkLeadingIcon": "shrink-0 size-5",
+    "linkLeadingAvatar": "shrink-0",
+    "linkLeadingAvatarSize": "2xs",
+    "linkTrailing": "group ms-auto inline-flex gap-1.5 items-center",
+    "linkTrailingBadge": "shrink-0",
+    "linkTrailingBadgeSize": "sm",
+    "linkTrailingIcon": "size-5 transform shrink-0 group-data-[state=open]:rotate-180 transition-transform duration-200",
+    "linkLabel": "truncate",
+    "linkLabelExternalIcon": "inline-block size-3 align-top text-dimmed",
+    "childList": "isolate",
+    "childLabel": "text-xs text-highlighted",
+    "childItem": "",
+    "childLink": "group relative size-full flex items-start text-start text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2",
+    "childLinkWrapper": "min-w-0",
+    "childLinkIcon": "size-5 shrink-0",
+    "childLinkLabel": "truncate",
+    "childLinkLabelExternalIcon": "inline-block size-3 align-top text-dimmed",
+    "childLinkDescription": "text-muted",
+    "separator": "px-2 h-px bg-border",
+    "viewportWrapper": "absolute top-full left-0 flex w-full",
+    "viewport": "relative overflow-hidden bg-default shadow-lg rounded-md ring ring-default h-(--reka-navigation-menu-viewport-height) w-full transition-[width,height,left] duration-200 origin-[top_center] data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] z-[1]",
+    "content": "",
+    "indicator": "absolute data-[state=visible]:animate-[fade-in_100ms_ease-out] data-[state=hidden]:animate-[fade-out_100ms_ease-in] data-[state=hidden]:opacity-0 bottom-0 z-[2] w-(--reka-navigation-menu-indicator-size) translate-x-(--reka-navigation-menu-indicator-position) flex h-2.5 items-end justify-center overflow-hidden transition-[translate,width] duration-200",
+    "arrow": "relative top-[50%] size-2.5 rotate-45 border border-default bg-default z-[1] rounded-xs"
+  },
+  "variants": {
+    "color": {
+      "primary": {
+        "link": "focus-visible:before:ring-primary",
+        "childLink": "focus-visible:before:ring-primary"
+      },
+      "secondary": {
+        "link": "focus-visible:before:ring-secondary",
+        "childLink": "focus-visible:before:ring-secondary"
+      },
+      "success": {
+        "link": "focus-visible:before:ring-success",
+        "childLink": "focus-visible:before:ring-success"
+      },
+      "info": {
+        "link": "focus-visible:before:ring-info",
+        "childLink": "focus-visible:before:ring-info"
+      },
+      "warning": {
+        "link": "focus-visible:before:ring-warning",
+        "childLink": "focus-visible:before:ring-warning"
+      },
+      "error": {
+        "link": "focus-visible:before:ring-error",
+        "childLink": "focus-visible:before:ring-error"
+      },
+      "neutral": {
+        "link": "focus-visible:before:ring-inverted",
+        "childLink": "focus-visible:before:ring-inverted"
+      }
+    },
+    "highlightColor": {
+      "primary": "",
+      "secondary": "",
+      "success": "",
+      "info": "",
+      "warning": "",
+      "error": "",
+      "neutral": ""
+    },
+    "variant": {
+      "pill": "",
+      "link": ""
+    },
+    "orientation": {
+      "horizontal": {
+        "root": "items-center justify-between",
+        "list": "flex items-center",
+        "item": "py-2",
+        "link": "px-2.5 py-1.5 before:inset-x-px before:inset-y-0",
+        "childList": "grid p-2",
+        "childLink": "px-3 py-2 gap-2 before:inset-x-px before:inset-y-0",
+        "childLinkLabel": "font-medium",
+        "content": "absolute top-0 left-0 w-full max-h-[70vh] overflow-y-auto"
+      },
+      "vertical": {
+        "root": "flex-col",
+        "link": "flex-row px-2.5 py-1.5 before:inset-y-px before:inset-x-0",
+        "childLabel": "px-1.5 py-0.5",
+        "childLink": "p-1.5 gap-1.5 before:inset-y-px before:inset-x-0"
+      }
+    },
+    "contentOrientation": {
+      "horizontal": {
+        "viewportWrapper": "justify-center",
+        "content": "data-[motion=from-start]:animate-[enter-from-left_200ms_ease] data-[motion=from-end]:animate-[enter-from-right_200ms_ease] data-[motion=to-start]:animate-[exit-to-left_200ms_ease] data-[motion=to-end]:animate-[exit-to-right_200ms_ease]"
+      },
+      "vertical": {
+        "viewport": "sm:w-(--reka-navigation-menu-viewport-width) left-(--reka-navigation-menu-viewport-left)"
+      }
+    },
+    "active": {
+      "true": {
+        "childLink": "before:bg-elevated text-highlighted",
+        "childLinkIcon": "text-default"
+      },
+      "false": {
+        "link": "text-muted",
+        "linkLeadingIcon": "text-dimmed",
+        "childLink": [
+          "hover:before:bg-elevated/50 text-default hover:text-highlighted",
+          "transition-colors before:transition-colors"
+        ],
+        "childLinkIcon": [
+          "text-dimmed group-hover:text-default",
+          "transition-colors"
+        ]
+      }
+    },
+    "disabled": {
+      "true": {
+        "link": "cursor-not-allowed opacity-75"
+      }
+    },
+    "highlight": {
+      "true": ""
+    },
+    "level": {
+      "true": ""
+    },
+    "collapsed": {
+      "true": ""
+    }
+  },
+  "compoundVariants": [
+    {
+      "orientation": "horizontal",
+      "contentOrientation": "horizontal",
+      "class": {
+        "childList": "grid-cols-2 gap-2"
+      }
+    },
+    {
+      "orientation": "horizontal",
+      "contentOrientation": "vertical",
+      "class": {
+        "childList": "gap-1",
+        "content": "w-60"
+      }
+    },
+    {
+      "orientation": "vertical",
+      "collapsed": false,
+      "class": {
+        "childList": "ms-5 border-s border-default",
+        "childItem": "ps-1.5 -ms-px",
+        "content": "data-[state=open]:animate-[collapsible-down_200ms_ease-out] data-[state=closed]:animate-[collapsible-up_200ms_ease-out] overflow-hidden"
+      }
+    },
+    {
+      "orientation": "vertical",
+      "collapsed": true,
+      "class": {
+        "link": "px-1.5",
+        "content": "shadow-sm rounded-sm min-h-6 p-1"
+      }
+    },
+    {
+      "orientation": "horizontal",
+      "highlight": true,
+      "class": {
+        "link": [
+          "after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full",
+          "after:transition-colors"
+        ]
+      }
+    },
+    {
+      "orientation": "vertical",
+      "highlight": true,
+      "level": true,
+      "class": {
+        "link": [
+          "after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full",
+          "after:transition-colors"
+        ]
+      }
+    },
+    {
+      "disabled": false,
+      "active": false,
+      "variant": "pill",
+      "class": {
+        "link": [
+          "hover:text-highlighted hover:before:bg-elevated/50",
+          "transition-colors before:transition-colors"
+        ],
+        "linkLeadingIcon": [
+          "group-hover:text-default",
+          "transition-colors"
+        ]
+      }
+    },
+    {
+      "disabled": false,
+      "active": false,
+      "variant": "pill",
+      "orientation": "horizontal",
+      "class": {
+        "link": "data-[state=open]:text-highlighted",
+        "linkLeadingIcon": "group-data-[state=open]:text-default"
+      }
+    },
+    {
+      "disabled": false,
+      "variant": "pill",
+      "highlight": true,
+      "orientation": "horizontal",
+      "class": {
+        "link": "data-[state=open]:before:bg-elevated/50"
+      }
+    },
+    {
+      "disabled": false,
+      "variant": "pill",
+      "highlight": false,
+      "active": false,
+      "orientation": "horizontal",
+      "class": {
+        "link": "data-[state=open]:before:bg-elevated/50"
+      }
+    },
+    {
+      "color": "primary",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-primary",
+        "linkLeadingIcon": "text-primary group-data-[state=open]:text-primary"
+      }
+    },
+    {
+      "color": "secondary",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-secondary",
+        "linkLeadingIcon": "text-secondary group-data-[state=open]:text-secondary"
+      }
+    },
+    {
+      "color": "success",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-success",
+        "linkLeadingIcon": "text-success group-data-[state=open]:text-success"
+      }
+    },
+    {
+      "color": "info",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-info",
+        "linkLeadingIcon": "text-info group-data-[state=open]:text-info"
+      }
+    },
+    {
+      "color": "warning",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-warning",
+        "linkLeadingIcon": "text-warning group-data-[state=open]:text-warning"
+      }
+    },
+    {
+      "color": "error",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-error",
+        "linkLeadingIcon": "text-error group-data-[state=open]:text-error"
+      }
+    },
+    {
+      "color": "neutral",
+      "variant": "pill",
+      "active": true,
+      "class": {
+        "link": "text-highlighted",
+        "linkLeadingIcon": "text-highlighted group-data-[state=open]:text-highlighted"
+      }
+    },
+    {
+      "variant": "pill",
+      "active": true,
+      "highlight": false,
+      "class": {
+        "link": "before:bg-elevated"
+      }
+    },
+    {
+      "variant": "pill",
+      "active": true,
+      "highlight": true,
+      "disabled": false,
+      "class": {
+        "link": [
+          "hover:before:bg-elevated/50",
+          "before:transition-colors"
+        ]
+      }
+    },
+    {
+      "disabled": false,
+      "active": false,
+      "variant": "link",
+      "class": {
+        "link": [
+          "hover:text-highlighted",
+          "transition-colors"
+        ],
+        "linkLeadingIcon": [
+          "group-hover:text-default",
+          "transition-colors"
+        ]
+      }
+    },
+    {
+      "disabled": false,
+      "active": false,
+      "variant": "link",
+      "orientation": "horizontal",
+      "class": {
+        "link": "data-[state=open]:text-highlighted",
+        "linkLeadingIcon": "group-data-[state=open]:text-default"
+      }
+    },
+    {
+      "color": "primary",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-primary",
+        "linkLeadingIcon": "text-primary group-data-[state=open]:text-primary"
+      }
+    },
+    {
+      "color": "secondary",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-secondary",
+        "linkLeadingIcon": "text-secondary group-data-[state=open]:text-secondary"
+      }
+    },
+    {
+      "color": "success",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-success",
+        "linkLeadingIcon": "text-success group-data-[state=open]:text-success"
+      }
+    },
+    {
+      "color": "info",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-info",
+        "linkLeadingIcon": "text-info group-data-[state=open]:text-info"
+      }
+    },
+    {
+      "color": "warning",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-warning",
+        "linkLeadingIcon": "text-warning group-data-[state=open]:text-warning"
+      }
+    },
+    {
+      "color": "error",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-error",
+        "linkLeadingIcon": "text-error group-data-[state=open]:text-error"
+      }
+    },
+    {
+      "color": "neutral",
+      "variant": "link",
+      "active": true,
+      "class": {
+        "link": "text-highlighted",
+        "linkLeadingIcon": "text-highlighted group-data-[state=open]:text-highlighted"
+      }
+    },
+    {
+      "highlightColor": "primary",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-primary"
+      }
+    },
+    {
+      "highlightColor": "secondary",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-secondary"
+      }
+    },
+    {
+      "highlightColor": "success",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-success"
+      }
+    },
+    {
+      "highlightColor": "info",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-info"
+      }
+    },
+    {
+      "highlightColor": "warning",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-warning"
+      }
+    },
+    {
+      "highlightColor": "error",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-error"
+      }
+    },
+    {
+      "highlightColor": "neutral",
+      "highlight": true,
+      "level": true,
+      "active": true,
+      "class": {
+        "link": "after:bg-inverted"
+      }
+    }
+  ],
+  "defaultVariants": {
+    "color": "primary",
+    "highlightColor": "primary",
+    "variant": "pill"
+  }
+};
+const _sfc_main$9 = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+  __name: "UNavigationMenu",
+  __ssrInlineRender: true,
+  props: {
+    as: { type: null, required: false },
+    trailingIcon: { type: [String, Object], required: false },
+    externalIcon: { type: [Boolean, String, Object], required: false, default: true },
+    items: { type: null, required: false },
+    color: { type: null, required: false },
+    variant: { type: null, required: false },
+    orientation: { type: null, required: false, default: "horizontal" },
+    collapsed: { type: Boolean, required: false },
+    tooltip: { type: [Boolean, Object], required: false },
+    popover: { type: [Boolean, Object], required: false },
+    highlight: { type: Boolean, required: false },
+    highlightColor: { type: null, required: false },
+    content: { type: Object, required: false },
+    contentOrientation: { type: null, required: false, default: "horizontal" },
+    arrow: { type: Boolean, required: false },
+    labelKey: { type: null, required: false, default: "label" },
+    class: { type: null, required: false },
+    ui: { type: null, required: false },
+    modelValue: { type: String, required: false },
+    defaultValue: { type: String, required: false },
+    delayDuration: { type: Number, required: false, default: 0 },
+    disableClickTrigger: { type: Boolean, required: false },
+    disableHoverTrigger: { type: Boolean, required: false },
+    skipDelayDuration: { type: Number, required: false },
+    disablePointerLeaveClose: { type: Boolean, required: false },
+    unmountOnHide: { type: Boolean, required: false, default: true },
+    disabled: { type: Boolean, required: false },
+    type: { type: String, required: false, default: "multiple" },
+    collapsible: { type: Boolean, required: false, default: true }
+  },
+  emits: ["update:modelValue"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emits = __emit;
+    const slots = useSlots();
+    const appConfig = useAppConfig();
+    const rootProps = useForwardPropsEmits(computed(() => ({
+      as: props.as,
+      modelValue: props.modelValue,
+      defaultValue: props.defaultValue,
+      delayDuration: props.delayDuration,
+      skipDelayDuration: props.skipDelayDuration,
+      orientation: props.orientation,
+      disableClickTrigger: props.disableClickTrigger,
+      disableHoverTrigger: props.disableHoverTrigger,
+      disablePointerLeaveClose: props.disablePointerLeaveClose,
+      unmountOnHide: props.unmountOnHide
+    })), emits);
+    const accordionProps = useForwardPropsEmits(reactivePick(props, "collapsible", "disabled", "type", "unmountOnHide"), emits);
+    const contentProps = toRef(() => props.content);
+    const tooltipProps = toRef(() => defu(typeof props.tooltip === "boolean" ? {} : props.tooltip, { delayDuration: 0, content: { side: "right" } }));
+    const popoverProps = toRef(() => defu(typeof props.popover === "boolean" ? {} : props.popover, { mode: "hover", content: { side: "right", align: "start", alignOffset: 2 } }));
+    const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate();
+    const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate({
+      props: {
+        item: Object,
+        index: Number,
+        level: Number
+      }
+    });
+    const ui = computed(() => tv({ extend: tv(theme$3), ...appConfig.ui?.navigationMenu || {} })({
+      orientation: props.orientation,
+      contentOrientation: props.orientation === "vertical" ? void 0 : props.contentOrientation,
+      collapsed: props.collapsed,
+      color: props.color,
+      variant: props.variant,
+      highlight: props.highlight,
+      highlightColor: props.highlightColor || props.color
+    }));
+    const lists = computed(
+      () => props.items?.length ? isArrayOfArray(props.items) ? props.items : [props.items] : []
+    );
+    function getAccordionDefaultValue(list, level = 0) {
+      const indexes = list.reduce((acc, item, index) => {
+        if (item.defaultOpen || item.open) {
+          acc.push(item.value || (level > 0 ? `item-${level}-${index}` : `item-${index}`));
+        }
+        return acc;
+      }, []);
+      return props.type === "single" ? indexes[0] : indexes;
+    }
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[-->`);
+      _push(ssrRenderComponent(unref(DefineLinkTemplate), null, {
+        default: withCtx(({ item, active, index }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            ssrRenderSlot(_ctx.$slots, item.slot || "item", {
+              item,
+              index
+            }, () => {
+              ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-leading` : "item-leading", {
+                item,
+                active,
+                index
+              }, () => {
+                if (item.avatar) {
+                  _push2(ssrRenderComponent(_sfc_main$f, mergeProps({
+                    size: item.ui?.linkLeadingAvatarSize || props.ui?.linkLeadingAvatarSize || ui.value.linkLeadingAvatarSize()
+                  }, item.avatar, {
+                    class: ui.value.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active, disabled: !!item.disabled })
+                  }), null, _parent2, _scopeId));
+                } else if (item.icon) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: item.icon,
+                    class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active, disabled: !!item.disabled })
+                  }, null, _parent2, _scopeId));
+                } else {
+                  _push2(`<!---->`);
+                }
+              }, _push2, _parent2, _scopeId);
+              if ((!__props.collapsed || __props.orientation !== "vertical") && (unref(get)(item, props.labelKey) || !!slots[item.slot ? `${item.slot}-label` : "item-label"])) {
+                _push2(`<span class="${ssrRenderClass(ui.value.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] }))}"${_scopeId}>`);
+                ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-label` : "item-label", {
+                  item,
+                  active,
+                  index
+                }, () => {
+                  _push2(`${ssrInterpolate(unref(get)(item, props.labelKey))}`);
+                }, _push2, _parent2, _scopeId);
+                if (item.target === "_blank" && __props.externalIcon !== false) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                    class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, item.ui?.linkLabelExternalIcon], active })
+                  }, null, _parent2, _scopeId));
+                } else {
+                  _push2(`<!---->`);
+                }
+                _push2(`</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              if ((!__props.collapsed || __props.orientation !== "vertical") && (item.badge || __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) || __props.orientation === "vertical" && item.children?.length || item.trailingIcon || !!slots[item.slot ? `${item.slot}-trailing` : "item-trailing"])) {
+                ssrRenderVNode(_push2, createVNode(resolveDynamicComponent(__props.orientation === "vertical" && item.children?.length && !__props.collapsed ? unref(AccordionTrigger) : "span"), {
+                  as: "span",
+                  class: ui.value.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] }),
+                  onClick: () => {
+                  }
+                }, {
+                  default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                    if (_push3) {
+                      ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-trailing` : "item-trailing", {
+                        item,
+                        active,
+                        index
+                      }, () => {
+                        if (item.badge !== void 0) {
+                          _push3(ssrRenderComponent(_sfc_main$g, mergeProps({
+                            color: "neutral",
+                            variant: "outline",
+                            size: item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.value.linkTrailingBadgeSize()
+                          }, typeof item.badge === "string" || typeof item.badge === "number" ? { label: item.badge } : item.badge, {
+                            class: ui.value.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })
+                          }), null, _parent3, _scopeId2));
+                        } else {
+                          _push3(`<!---->`);
+                        }
+                        if (__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) || __props.orientation === "vertical" && item.children?.length) {
+                          _push3(ssrRenderComponent(_sfc_main$e, {
+                            name: item.trailingIcon || __props.trailingIcon || unref(appConfig).ui.icons.chevronDown,
+                            class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                          }, null, _parent3, _scopeId2));
+                        } else if (item.trailingIcon) {
+                          _push3(ssrRenderComponent(_sfc_main$e, {
+                            name: item.trailingIcon,
+                            class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                          }, null, _parent3, _scopeId2));
+                        } else {
+                          _push3(`<!---->`);
+                        }
+                      }, _push3, _parent3, _scopeId2);
+                    } else {
+                      return [
+                        renderSlot(_ctx.$slots, item.slot ? `${item.slot}-trailing` : "item-trailing", {
+                          item,
+                          active,
+                          index
+                        }, () => [
+                          item.badge !== void 0 ? (openBlock(), createBlock(_sfc_main$g, mergeProps({
+                            key: 0,
+                            color: "neutral",
+                            variant: "outline",
+                            size: item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.value.linkTrailingBadgeSize()
+                          }, typeof item.badge === "string" || typeof item.badge === "number" ? { label: item.badge } : item.badge, {
+                            class: ui.value.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })
+                          }), null, 16, ["size", "class"])) : createCommentVNode("", true),
+                          __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) || __props.orientation === "vertical" && item.children?.length ? (openBlock(), createBlock(_sfc_main$e, {
+                            key: 1,
+                            name: item.trailingIcon || __props.trailingIcon || unref(appConfig).ui.icons.chevronDown,
+                            class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                          }, null, 8, ["name", "class"])) : item.trailingIcon ? (openBlock(), createBlock(_sfc_main$e, {
+                            key: 2,
+                            name: item.trailingIcon,
+                            class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                          }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                        ])
+                      ];
+                    }
+                  }),
+                  _: 2
+                }), _parent2, _scopeId);
+              } else {
+                _push2(`<!---->`);
+              }
+            }, _push2, _parent2, _scopeId);
+          } else {
+            return [
+              renderSlot(_ctx.$slots, item.slot || "item", {
+                item,
+                index
+              }, () => [
+                renderSlot(_ctx.$slots, item.slot ? `${item.slot}-leading` : "item-leading", {
+                  item,
+                  active,
+                  index
+                }, () => [
+                  item.avatar ? (openBlock(), createBlock(_sfc_main$f, mergeProps({
+                    key: 0,
+                    size: item.ui?.linkLeadingAvatarSize || props.ui?.linkLeadingAvatarSize || ui.value.linkLeadingAvatarSize()
+                  }, item.avatar, {
+                    class: ui.value.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active, disabled: !!item.disabled })
+                  }), null, 16, ["size", "class"])) : item.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                    key: 1,
+                    name: item.icon,
+                    class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active, disabled: !!item.disabled })
+                  }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                ]),
+                (!__props.collapsed || __props.orientation !== "vertical") && (unref(get)(item, props.labelKey) || !!slots[item.slot ? `${item.slot}-label` : "item-label"]) ? (openBlock(), createBlock("span", {
+                  key: 0,
+                  class: ui.value.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })
+                }, [
+                  renderSlot(_ctx.$slots, item.slot ? `${item.slot}-label` : "item-label", {
+                    item,
+                    active,
+                    index
+                  }, () => [
+                    createTextVNode(toDisplayString(unref(get)(item, props.labelKey)), 1)
+                  ]),
+                  item.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                    key: 0,
+                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                    class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, item.ui?.linkLabelExternalIcon], active })
+                  }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                ], 2)) : createCommentVNode("", true),
+                (!__props.collapsed || __props.orientation !== "vertical") && (item.badge || __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) || __props.orientation === "vertical" && item.children?.length || item.trailingIcon || !!slots[item.slot ? `${item.slot}-trailing` : "item-trailing"]) ? (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "vertical" && item.children?.length && !__props.collapsed ? unref(AccordionTrigger) : "span"), {
+                  key: 1,
+                  as: "span",
+                  class: ui.value.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] }),
+                  onClick: withModifiers(() => {
+                  }, ["stop", "prevent"])
+                }, {
+                  default: withCtx(() => [
+                    renderSlot(_ctx.$slots, item.slot ? `${item.slot}-trailing` : "item-trailing", {
+                      item,
+                      active,
+                      index
+                    }, () => [
+                      item.badge !== void 0 ? (openBlock(), createBlock(_sfc_main$g, mergeProps({
+                        key: 0,
+                        color: "neutral",
+                        variant: "outline",
+                        size: item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.value.linkTrailingBadgeSize()
+                      }, typeof item.badge === "string" || typeof item.badge === "number" ? { label: item.badge } : item.badge, {
+                        class: ui.value.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })
+                      }), null, 16, ["size", "class"])) : createCommentVNode("", true),
+                      __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) || __props.orientation === "vertical" && item.children?.length ? (openBlock(), createBlock(_sfc_main$e, {
+                        key: 1,
+                        name: item.trailingIcon || __props.trailingIcon || unref(appConfig).ui.icons.chevronDown,
+                        class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                      }, null, 8, ["name", "class"])) : item.trailingIcon ? (openBlock(), createBlock(_sfc_main$e, {
+                        key: 2,
+                        name: item.trailingIcon,
+                        class: ui.value.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })
+                      }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                    ])
+                  ]),
+                  _: 2
+                }, 1032, ["class", "onClick"])) : createCommentVNode("", true)
+              ])
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+      _push(ssrRenderComponent(unref(DefineItemTemplate), null, {
+        default: withCtx(({ item, index, level = 0 }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            ssrRenderVNode(_push2, createVNode(resolveDynamicComponent(__props.orientation === "vertical" && !__props.collapsed ? unref(AccordionItem) : unref(NavigationMenuItem)), {
+              as: "li",
+              value: item.value || (level > 0 ? `item-${level}-${index}` : `item-${index}`)
+            }, {
+              default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  if (__props.orientation === "vertical" && item.type === "label" && !__props.collapsed) {
+                    _push3(`<div class="${ssrRenderClass(ui.value.label({ class: [props.ui?.label, item.ui?.label, item.class] }))}"${_scopeId2}>`);
+                    _push3(ssrRenderComponent(unref(ReuseLinkTemplate), {
+                      item,
+                      index
+                    }, null, _parent3, _scopeId2));
+                    _push3(`</div>`);
+                  } else if (item.type !== "label") {
+                    _push3(ssrRenderComponent(_sfc_main$d, mergeProps(__props.orientation === "vertical" && item.children?.length && !__props.collapsed && item.type === "trigger" ? {} : unref(pickLinkProps)(item), { custom: "" }), {
+                      default: withCtx(({ active, ...slotProps }, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          ssrRenderVNode(_push4, createVNode(resolveDynamicComponent(__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? unref(NavigationMenuTrigger) : __props.orientation === "vertical" && item.children?.length && !__props.collapsed && !slotProps.href ? unref(AccordionTrigger) : unref(NavigationMenuLink)), {
+                            "as-child": "",
+                            active: active || item.active,
+                            disabled: item.disabled,
+                            onSelect: item.onSelect
+                          }, {
+                            default: withCtx((_2, _push5, _parent5, _scopeId4) => {
+                              if (_push5) {
+                                if (__props.orientation === "vertical" && __props.collapsed && item.children?.length && (!!props.popover || !!item.popover)) {
+                                  _push5(ssrRenderComponent(_sfc_main$a, mergeProps({ ...popoverProps.value, ...typeof item.popover === "boolean" ? {} : item.popover || {} }, {
+                                    ui: { content: ui.value.content({ class: [props.ui?.content, item.ui?.content] }) }
+                                  }), {
+                                    content: withCtx((_3, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                          item,
+                                          active: active || item.active,
+                                          index
+                                        }, () => {
+                                          _push6(`<ul class="${ssrRenderClass(ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] }))}"${_scopeId5}><li class="${ssrRenderClass(ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] }))}"${_scopeId5}>${ssrInterpolate(unref(get)(item, props.labelKey))}</li><!--[-->`);
+                                          ssrRenderList(item.children, (childItem, childIndex) => {
+                                            _push6(`<li class="${ssrRenderClass(ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] }))}"${_scopeId5}>`);
+                                            _push6(ssrRenderComponent(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                              default: withCtx(({ active: childActive, ...childSlotProps }, _push7, _parent7, _scopeId6) => {
+                                                if (_push7) {
+                                                  _push7(ssrRenderComponent(unref(NavigationMenuLink), {
+                                                    "as-child": "",
+                                                    active: childActive,
+                                                    onSelect: childItem.onSelect
+                                                  }, {
+                                                    default: withCtx((_4, _push8, _parent8, _scopeId7) => {
+                                                      if (_push8) {
+                                                        _push8(ssrRenderComponent(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                          class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                        }), {
+                                                          default: withCtx((_5, _push9, _parent9, _scopeId8) => {
+                                                            if (_push9) {
+                                                              if (childItem.icon) {
+                                                                _push9(ssrRenderComponent(_sfc_main$e, {
+                                                                  name: childItem.icon,
+                                                                  class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                                }, null, _parent9, _scopeId8));
+                                                              } else {
+                                                                _push9(`<!---->`);
+                                                              }
+                                                              _push9(`<span class="${ssrRenderClass(ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive }))}"${_scopeId8}>${ssrInterpolate(unref(get)(childItem, props.labelKey))} `);
+                                                              if (childItem.target === "_blank" && __props.externalIcon !== false) {
+                                                                _push9(ssrRenderComponent(_sfc_main$e, {
+                                                                  name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                  class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                                }, null, _parent9, _scopeId8));
+                                                              } else {
+                                                                _push9(`<!---->`);
+                                                              }
+                                                              _push9(`</span>`);
+                                                            } else {
+                                                              return [
+                                                                childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                  key: 0,
+                                                                  name: childItem.icon,
+                                                                  class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                                }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                                createVNode("span", {
+                                                                  class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                                }, [
+                                                                  createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                                  childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                    key: 0,
+                                                                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                    class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                                  }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                                ], 2)
+                                                              ];
+                                                            }
+                                                          }),
+                                                          _: 2
+                                                        }, _parent8, _scopeId7));
+                                                      } else {
+                                                        return [
+                                                          createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                            class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                          }), {
+                                                            default: withCtx(() => [
+                                                              childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                key: 0,
+                                                                name: childItem.icon,
+                                                                class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                              }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                              createVNode("span", {
+                                                                class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                              }, [
+                                                                createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                                childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                  key: 0,
+                                                                  name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                  class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                                }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                              ], 2)
+                                                            ]),
+                                                            _: 2
+                                                          }, 1040, ["class"])
+                                                        ];
+                                                      }
+                                                    }),
+                                                    _: 2
+                                                  }, _parent7, _scopeId6));
+                                                } else {
+                                                  return [
+                                                    createVNode(unref(NavigationMenuLink), {
+                                                      "as-child": "",
+                                                      active: childActive,
+                                                      onSelect: childItem.onSelect
+                                                    }, {
+                                                      default: withCtx(() => [
+                                                        createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                          class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                        }), {
+                                                          default: withCtx(() => [
+                                                            childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                              key: 0,
+                                                              name: childItem.icon,
+                                                              class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                            }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                            createVNode("span", {
+                                                              class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                            }, [
+                                                              createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                              childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                key: 0,
+                                                                name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                              }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                            ], 2)
+                                                          ]),
+                                                          _: 2
+                                                        }, 1040, ["class"])
+                                                      ]),
+                                                      _: 2
+                                                    }, 1032, ["active", "onSelect"])
+                                                  ];
+                                                }
+                                              }),
+                                              _: 2
+                                            }, _parent6, _scopeId5));
+                                            _push6(`</li>`);
+                                          });
+                                          _push6(`<!--]--></ul>`);
+                                        }, _push6, _parent6, _scopeId5);
+                                      } else {
+                                        return [
+                                          renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                            item,
+                                            active: active || item.active,
+                                            index
+                                          }, () => [
+                                            createVNode("ul", {
+                                              class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                            }, [
+                                              createVNode("li", {
+                                                class: ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })
+                                              }, toDisplayString(unref(get)(item, props.labelKey)), 3),
+                                              (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                                return openBlock(), createBlock("li", {
+                                                  key: childIndex,
+                                                  class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                                }, [
+                                                  createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                                    default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                                      createVNode(unref(NavigationMenuLink), {
+                                                        "as-child": "",
+                                                        active: childActive,
+                                                        onSelect: childItem.onSelect
+                                                      }, {
+                                                        default: withCtx(() => [
+                                                          createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                            class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                          }), {
+                                                            default: withCtx(() => [
+                                                              childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                key: 0,
+                                                                name: childItem.icon,
+                                                                class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                              }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                              createVNode("span", {
+                                                                class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                              }, [
+                                                                createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                                childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                  key: 0,
+                                                                  name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                  class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                                }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                              ], 2)
+                                                            ]),
+                                                            _: 2
+                                                          }, 1040, ["class"])
+                                                        ]),
+                                                        _: 2
+                                                      }, 1032, ["active", "onSelect"])
+                                                    ]),
+                                                    _: 2
+                                                  }, 1040)
+                                                ], 2);
+                                              }), 128))
+                                            ], 2)
+                                          ])
+                                        ];
+                                      }
+                                    }),
+                                    default: withCtx((_3, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        _push6(ssrRenderComponent(_sfc_main$1$1, mergeProps(slotProps, {
+                                          class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                        }), {
+                                          default: withCtx((_4, _push7, _parent7, _scopeId6) => {
+                                            if (_push7) {
+                                              _push7(ssrRenderComponent(unref(ReuseLinkTemplate), {
+                                                item,
+                                                active: active || item.active,
+                                                index
+                                              }, null, _parent7, _scopeId6));
+                                            } else {
+                                              return [
+                                                createVNode(unref(ReuseLinkTemplate), {
+                                                  item,
+                                                  active: active || item.active,
+                                                  index
+                                                }, null, 8, ["item", "active", "index"])
+                                              ];
+                                            }
+                                          }),
+                                          _: 2
+                                        }, _parent6, _scopeId5));
+                                      } else {
+                                        return [
+                                          createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                            class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                          }), {
+                                            default: withCtx(() => [
+                                              createVNode(unref(ReuseLinkTemplate), {
+                                                item,
+                                                active: active || item.active,
+                                                index
+                                              }, null, 8, ["item", "active", "index"])
+                                            ]),
+                                            _: 2
+                                          }, 1040, ["class"])
+                                        ];
+                                      }
+                                    }),
+                                    _: 2
+                                  }, _parent5, _scopeId4));
+                                } else if (__props.orientation === "vertical" && __props.collapsed && (!!props.tooltip || !!item.tooltip)) {
+                                  _push5(ssrRenderComponent(_sfc_main$1$2, mergeProps({
+                                    text: unref(get)(item, props.labelKey)
+                                  }, { ...tooltipProps.value, ...typeof item.tooltip === "boolean" ? {} : item.tooltip || {} }), {
+                                    default: withCtx((_3, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        _push6(ssrRenderComponent(_sfc_main$1$1, mergeProps(slotProps, {
+                                          class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                        }), {
+                                          default: withCtx((_4, _push7, _parent7, _scopeId6) => {
+                                            if (_push7) {
+                                              _push7(ssrRenderComponent(unref(ReuseLinkTemplate), {
+                                                item,
+                                                active: active || item.active,
+                                                index
+                                              }, null, _parent7, _scopeId6));
+                                            } else {
+                                              return [
+                                                createVNode(unref(ReuseLinkTemplate), {
+                                                  item,
+                                                  active: active || item.active,
+                                                  index
+                                                }, null, 8, ["item", "active", "index"])
+                                              ];
+                                            }
+                                          }),
+                                          _: 2
+                                        }, _parent6, _scopeId5));
+                                      } else {
+                                        return [
+                                          createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                            class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                          }), {
+                                            default: withCtx(() => [
+                                              createVNode(unref(ReuseLinkTemplate), {
+                                                item,
+                                                active: active || item.active,
+                                                index
+                                              }, null, 8, ["item", "active", "index"])
+                                            ]),
+                                            _: 2
+                                          }, 1040, ["class"])
+                                        ];
+                                      }
+                                    }),
+                                    _: 2
+                                  }, _parent5, _scopeId4));
+                                } else {
+                                  _push5(ssrRenderComponent(_sfc_main$1$1, mergeProps(slotProps, {
+                                    class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: __props.orientation === "horizontal" || level > 0 })
+                                  }), {
+                                    default: withCtx((_3, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        _push6(ssrRenderComponent(unref(ReuseLinkTemplate), {
+                                          item,
+                                          active: active || item.active,
+                                          index
+                                        }, null, _parent6, _scopeId5));
+                                      } else {
+                                        return [
+                                          createVNode(unref(ReuseLinkTemplate), {
+                                            item,
+                                            active: active || item.active,
+                                            index
+                                          }, null, 8, ["item", "active", "index"])
+                                        ];
+                                      }
+                                    }),
+                                    _: 2
+                                  }, _parent5, _scopeId4));
+                                }
+                              } else {
+                                return [
+                                  __props.orientation === "vertical" && __props.collapsed && item.children?.length && (!!props.popover || !!item.popover) ? (openBlock(), createBlock(_sfc_main$a, mergeProps({ key: 0 }, { ...popoverProps.value, ...typeof item.popover === "boolean" ? {} : item.popover || {} }, {
+                                    ui: { content: ui.value.content({ class: [props.ui?.content, item.ui?.content] }) }
+                                  }), {
+                                    content: withCtx(() => [
+                                      renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                        item,
+                                        active: active || item.active,
+                                        index
+                                      }, () => [
+                                        createVNode("ul", {
+                                          class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                        }, [
+                                          createVNode("li", {
+                                            class: ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })
+                                          }, toDisplayString(unref(get)(item, props.labelKey)), 3),
+                                          (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                            return openBlock(), createBlock("li", {
+                                              key: childIndex,
+                                              class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                            }, [
+                                              createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                                default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                                  createVNode(unref(NavigationMenuLink), {
+                                                    "as-child": "",
+                                                    active: childActive,
+                                                    onSelect: childItem.onSelect
+                                                  }, {
+                                                    default: withCtx(() => [
+                                                      createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                        class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                      }), {
+                                                        default: withCtx(() => [
+                                                          childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                            key: 0,
+                                                            name: childItem.icon,
+                                                            class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                          }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                          createVNode("span", {
+                                                            class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                          }, [
+                                                            createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                            childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                              key: 0,
+                                                              name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                              class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                            }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                          ], 2)
+                                                        ]),
+                                                        _: 2
+                                                      }, 1040, ["class"])
+                                                    ]),
+                                                    _: 2
+                                                  }, 1032, ["active", "onSelect"])
+                                                ]),
+                                                _: 2
+                                              }, 1040)
+                                            ], 2);
+                                          }), 128))
+                                        ], 2)
+                                      ])
+                                    ]),
+                                    default: withCtx(() => [
+                                      createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                        class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                      }), {
+                                        default: withCtx(() => [
+                                          createVNode(unref(ReuseLinkTemplate), {
+                                            item,
+                                            active: active || item.active,
+                                            index
+                                          }, null, 8, ["item", "active", "index"])
+                                        ]),
+                                        _: 2
+                                      }, 1040, ["class"])
+                                    ]),
+                                    _: 2
+                                  }, 1040, ["ui"])) : __props.orientation === "vertical" && __props.collapsed && (!!props.tooltip || !!item.tooltip) ? (openBlock(), createBlock(_sfc_main$1$2, mergeProps({
+                                    key: 1,
+                                    text: unref(get)(item, props.labelKey)
+                                  }, { ...tooltipProps.value, ...typeof item.tooltip === "boolean" ? {} : item.tooltip || {} }), {
+                                    default: withCtx(() => [
+                                      createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                        class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                      }), {
+                                        default: withCtx(() => [
+                                          createVNode(unref(ReuseLinkTemplate), {
+                                            item,
+                                            active: active || item.active,
+                                            index
+                                          }, null, 8, ["item", "active", "index"])
+                                        ]),
+                                        _: 2
+                                      }, 1040, ["class"])
+                                    ]),
+                                    _: 2
+                                  }, 1040, ["text"])) : (openBlock(), createBlock(_sfc_main$1$1, mergeProps({ key: 2 }, slotProps, {
+                                    class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: __props.orientation === "horizontal" || level > 0 })
+                                  }), {
+                                    default: withCtx(() => [
+                                      createVNode(unref(ReuseLinkTemplate), {
+                                        item,
+                                        active: active || item.active,
+                                        index
+                                      }, null, 8, ["item", "active", "index"])
+                                    ]),
+                                    _: 2
+                                  }, 1040, ["class"]))
+                                ];
+                              }
+                            }),
+                            _: 2
+                          }), _parent4, _scopeId3);
+                          if (__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"])) {
+                            _push4(ssrRenderComponent(unref(NavigationMenuContent), mergeProps(contentProps.value, {
+                              class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                            }), {
+                              default: withCtx((_2, _push5, _parent5, _scopeId4) => {
+                                if (_push5) {
+                                  ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                    item,
+                                    active: active || item.active,
+                                    index
+                                  }, () => {
+                                    _push5(`<ul class="${ssrRenderClass(ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] }))}"${_scopeId4}><!--[-->`);
+                                    ssrRenderList(item.children, (childItem, childIndex) => {
+                                      _push5(`<li class="${ssrRenderClass(ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] }))}"${_scopeId4}>`);
+                                      _push5(ssrRenderComponent(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                        default: withCtx(({ active: childActive, ...childSlotProps }, _push6, _parent6, _scopeId5) => {
+                                          if (_push6) {
+                                            _push6(ssrRenderComponent(unref(NavigationMenuLink), {
+                                              "as-child": "",
+                                              active: childActive,
+                                              onSelect: childItem.onSelect
+                                            }, {
+                                              default: withCtx((_3, _push7, _parent7, _scopeId6) => {
+                                                if (_push7) {
+                                                  _push7(ssrRenderComponent(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                    class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                  }), {
+                                                    default: withCtx((_4, _push8, _parent8, _scopeId7) => {
+                                                      if (_push8) {
+                                                        if (childItem.icon) {
+                                                          _push8(ssrRenderComponent(_sfc_main$e, {
+                                                            name: childItem.icon,
+                                                            class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                          }, null, _parent8, _scopeId7));
+                                                        } else {
+                                                          _push8(`<!---->`);
+                                                        }
+                                                        _push8(`<div class="${ssrRenderClass(ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] }))}"${_scopeId7}><p class="${ssrRenderClass(ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive }))}"${_scopeId7}>${ssrInterpolate(unref(get)(childItem, props.labelKey))} `);
+                                                        if (childItem.target === "_blank" && __props.externalIcon !== false) {
+                                                          _push8(ssrRenderComponent(_sfc_main$e, {
+                                                            name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                            class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                          }, null, _parent8, _scopeId7));
+                                                        } else {
+                                                          _push8(`<!---->`);
+                                                        }
+                                                        _push8(`</p>`);
+                                                        if (childItem.description) {
+                                                          _push8(`<p class="${ssrRenderClass(ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive }))}"${_scopeId7}>${ssrInterpolate(childItem.description)}</p>`);
+                                                        } else {
+                                                          _push8(`<!---->`);
+                                                        }
+                                                        _push8(`</div>`);
+                                                      } else {
+                                                        return [
+                                                          childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                            key: 0,
+                                                            name: childItem.icon,
+                                                            class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                          }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                          createVNode("div", {
+                                                            class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                          }, [
+                                                            createVNode("p", {
+                                                              class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                            }, [
+                                                              createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                              childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                                key: 0,
+                                                                name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                                class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                              }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                            ], 2),
+                                                            childItem.description ? (openBlock(), createBlock("p", {
+                                                              key: 0,
+                                                              class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                            }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                          ], 2)
+                                                        ];
+                                                      }
+                                                    }),
+                                                    _: 2
+                                                  }, _parent7, _scopeId6));
+                                                } else {
+                                                  return [
+                                                    createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                      class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                    }), {
+                                                      default: withCtx(() => [
+                                                        childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                          key: 0,
+                                                          name: childItem.icon,
+                                                          class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                        createVNode("div", {
+                                                          class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                        }, [
+                                                          createVNode("p", {
+                                                            class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                          }, [
+                                                            createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                            childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                              key: 0,
+                                                              name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                              class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                            }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                          ], 2),
+                                                          childItem.description ? (openBlock(), createBlock("p", {
+                                                            key: 0,
+                                                            class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                          }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                        ], 2)
+                                                      ]),
+                                                      _: 2
+                                                    }, 1040, ["class"])
+                                                  ];
+                                                }
+                                              }),
+                                              _: 2
+                                            }, _parent6, _scopeId5));
+                                          } else {
+                                            return [
+                                              createVNode(unref(NavigationMenuLink), {
+                                                "as-child": "",
+                                                active: childActive,
+                                                onSelect: childItem.onSelect
+                                              }, {
+                                                default: withCtx(() => [
+                                                  createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                    class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                  }), {
+                                                    default: withCtx(() => [
+                                                      childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                        key: 0,
+                                                        name: childItem.icon,
+                                                        class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                      }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                      createVNode("div", {
+                                                        class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                      }, [
+                                                        createVNode("p", {
+                                                          class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                        }, [
+                                                          createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                          childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                            key: 0,
+                                                            name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                            class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                          }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                        ], 2),
+                                                        childItem.description ? (openBlock(), createBlock("p", {
+                                                          key: 0,
+                                                          class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                        }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                      ], 2)
+                                                    ]),
+                                                    _: 2
+                                                  }, 1040, ["class"])
+                                                ]),
+                                                _: 2
+                                              }, 1032, ["active", "onSelect"])
+                                            ];
+                                          }
+                                        }),
+                                        _: 2
+                                      }, _parent5, _scopeId4));
+                                      _push5(`</li>`);
+                                    });
+                                    _push5(`<!--]--></ul>`);
+                                  }, _push5, _parent5, _scopeId4);
+                                } else {
+                                  return [
+                                    renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                      item,
+                                      active: active || item.active,
+                                      index
+                                    }, () => [
+                                      createVNode("ul", {
+                                        class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                      }, [
+                                        (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                          return openBlock(), createBlock("li", {
+                                            key: childIndex,
+                                            class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                          }, [
+                                            createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                              default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                                createVNode(unref(NavigationMenuLink), {
+                                                  "as-child": "",
+                                                  active: childActive,
+                                                  onSelect: childItem.onSelect
+                                                }, {
+                                                  default: withCtx(() => [
+                                                    createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                      class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                    }), {
+                                                      default: withCtx(() => [
+                                                        childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                          key: 0,
+                                                          name: childItem.icon,
+                                                          class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                        createVNode("div", {
+                                                          class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                        }, [
+                                                          createVNode("p", {
+                                                            class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                          }, [
+                                                            createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                            childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                              key: 0,
+                                                              name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                              class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                            }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                          ], 2),
+                                                          childItem.description ? (openBlock(), createBlock("p", {
+                                                            key: 0,
+                                                            class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                          }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                        ], 2)
+                                                      ]),
+                                                      _: 2
+                                                    }, 1040, ["class"])
+                                                  ]),
+                                                  _: 2
+                                                }, 1032, ["active", "onSelect"])
+                                              ]),
+                                              _: 2
+                                            }, 1040)
+                                          ], 2);
+                                        }), 128))
+                                      ], 2)
+                                    ])
+                                  ];
+                                }
+                              }),
+                              _: 2
+                            }, _parent4, _scopeId3));
+                          } else {
+                            _push4(`<!---->`);
+                          }
+                        } else {
+                          return [
+                            (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? unref(NavigationMenuTrigger) : __props.orientation === "vertical" && item.children?.length && !__props.collapsed && !slotProps.href ? unref(AccordionTrigger) : unref(NavigationMenuLink)), {
+                              "as-child": "",
+                              active: active || item.active,
+                              disabled: item.disabled,
+                              onSelect: item.onSelect
+                            }, {
+                              default: withCtx(() => [
+                                __props.orientation === "vertical" && __props.collapsed && item.children?.length && (!!props.popover || !!item.popover) ? (openBlock(), createBlock(_sfc_main$a, mergeProps({ key: 0 }, { ...popoverProps.value, ...typeof item.popover === "boolean" ? {} : item.popover || {} }, {
+                                  ui: { content: ui.value.content({ class: [props.ui?.content, item.ui?.content] }) }
+                                }), {
+                                  content: withCtx(() => [
+                                    renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                      item,
+                                      active: active || item.active,
+                                      index
+                                    }, () => [
+                                      createVNode("ul", {
+                                        class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                      }, [
+                                        createVNode("li", {
+                                          class: ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })
+                                        }, toDisplayString(unref(get)(item, props.labelKey)), 3),
+                                        (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                          return openBlock(), createBlock("li", {
+                                            key: childIndex,
+                                            class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                          }, [
+                                            createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                              default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                                createVNode(unref(NavigationMenuLink), {
+                                                  "as-child": "",
+                                                  active: childActive,
+                                                  onSelect: childItem.onSelect
+                                                }, {
+                                                  default: withCtx(() => [
+                                                    createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                      class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                    }), {
+                                                      default: withCtx(() => [
+                                                        childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                          key: 0,
+                                                          name: childItem.icon,
+                                                          class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                        createVNode("span", {
+                                                          class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                        }, [
+                                                          createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                          childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                            key: 0,
+                                                            name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                            class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                          }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                        ], 2)
+                                                      ]),
+                                                      _: 2
+                                                    }, 1040, ["class"])
+                                                  ]),
+                                                  _: 2
+                                                }, 1032, ["active", "onSelect"])
+                                              ]),
+                                              _: 2
+                                            }, 1040)
+                                          ], 2);
+                                        }), 128))
+                                      ], 2)
+                                    ])
+                                  ]),
+                                  default: withCtx(() => [
+                                    createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                      class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                    }), {
+                                      default: withCtx(() => [
+                                        createVNode(unref(ReuseLinkTemplate), {
+                                          item,
+                                          active: active || item.active,
+                                          index
+                                        }, null, 8, ["item", "active", "index"])
+                                      ]),
+                                      _: 2
+                                    }, 1040, ["class"])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["ui"])) : __props.orientation === "vertical" && __props.collapsed && (!!props.tooltip || !!item.tooltip) ? (openBlock(), createBlock(_sfc_main$1$2, mergeProps({
+                                  key: 1,
+                                  text: unref(get)(item, props.labelKey)
+                                }, { ...tooltipProps.value, ...typeof item.tooltip === "boolean" ? {} : item.tooltip || {} }), {
+                                  default: withCtx(() => [
+                                    createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                      class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                    }), {
+                                      default: withCtx(() => [
+                                        createVNode(unref(ReuseLinkTemplate), {
+                                          item,
+                                          active: active || item.active,
+                                          index
+                                        }, null, 8, ["item", "active", "index"])
+                                      ]),
+                                      _: 2
+                                    }, 1040, ["class"])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["text"])) : (openBlock(), createBlock(_sfc_main$1$1, mergeProps({ key: 2 }, slotProps, {
+                                  class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: __props.orientation === "horizontal" || level > 0 })
+                                }), {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseLinkTemplate), {
+                                      item,
+                                      active: active || item.active,
+                                      index
+                                    }, null, 8, ["item", "active", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["class"]))
+                              ]),
+                              _: 2
+                            }, 1064, ["active", "disabled", "onSelect"])),
+                            __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? (openBlock(), createBlock(unref(NavigationMenuContent), mergeProps({ key: 0 }, contentProps.value, {
+                              class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                            }), {
+                              default: withCtx(() => [
+                                renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                  item,
+                                  active: active || item.active,
+                                  index
+                                }, () => [
+                                  createVNode("ul", {
+                                    class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                  }, [
+                                    (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                      return openBlock(), createBlock("li", {
+                                        key: childIndex,
+                                        class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                      }, [
+                                        createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                          default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                            createVNode(unref(NavigationMenuLink), {
+                                              "as-child": "",
+                                              active: childActive,
+                                              onSelect: childItem.onSelect
+                                            }, {
+                                              default: withCtx(() => [
+                                                createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                  class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                }), {
+                                                  default: withCtx(() => [
+                                                    childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                      key: 0,
+                                                      name: childItem.icon,
+                                                      class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                    createVNode("div", {
+                                                      class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                    }, [
+                                                      createVNode("p", {
+                                                        class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                      }, [
+                                                        createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                        childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                          key: 0,
+                                                          name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                          class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                      ], 2),
+                                                      childItem.description ? (openBlock(), createBlock("p", {
+                                                        key: 0,
+                                                        class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                      }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                    ], 2)
+                                                  ]),
+                                                  _: 2
+                                                }, 1040, ["class"])
+                                              ]),
+                                              _: 2
+                                            }, 1032, ["active", "onSelect"])
+                                          ]),
+                                          _: 2
+                                        }, 1040)
+                                      ], 2);
+                                    }), 128))
+                                  ], 2)
+                                ])
+                              ]),
+                              _: 2
+                            }, 1040, ["class"])) : createCommentVNode("", true)
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  } else {
+                    _push3(`<!---->`);
+                  }
+                  if (__props.orientation === "vertical" && item.children?.length && !__props.collapsed) {
+                    _push3(ssrRenderComponent(unref(AccordionContent), {
+                      class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                    }, {
+                      default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(ssrRenderComponent(unref(AccordionRoot), mergeProps({
+                            ...unref(accordionProps),
+                            defaultValue: getAccordionDefaultValue(item.children, level + 1)
+                          }, {
+                            as: "ul",
+                            class: ui.value.childList({ class: props.ui?.childList })
+                          }), {
+                            default: withCtx((_3, _push5, _parent5, _scopeId4) => {
+                              if (_push5) {
+                                _push5(`<!--[-->`);
+                                ssrRenderList(item.children, (childItem, childIndex) => {
+                                  _push5(ssrRenderComponent(unref(ReuseItemTemplate), {
+                                    key: childIndex,
+                                    item: childItem,
+                                    index: childIndex,
+                                    level: level + 1,
+                                    class: ui.value.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })
+                                  }, null, _parent5, _scopeId4));
+                                });
+                                _push5(`<!--]-->`);
+                              } else {
+                                return [
+                                  (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                    return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                                      key: childIndex,
+                                      item: childItem,
+                                      index: childIndex,
+                                      level: level + 1,
+                                      class: ui.value.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })
+                                    }, null, 8, ["item", "index", "level", "class"]);
+                                  }), 128))
+                                ];
+                              }
+                            }),
+                            _: 2
+                          }, _parent4, _scopeId3));
+                        } else {
+                          return [
+                            createVNode(unref(AccordionRoot), mergeProps({
+                              ...unref(accordionProps),
+                              defaultValue: getAccordionDefaultValue(item.children, level + 1)
+                            }, {
+                              as: "ul",
+                              class: ui.value.childList({ class: props.ui?.childList })
+                            }), {
+                              default: withCtx(() => [
+                                (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                  return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                                    key: childIndex,
+                                    item: childItem,
+                                    index: childIndex,
+                                    level: level + 1,
+                                    class: ui.value.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })
+                                  }, null, 8, ["item", "index", "level", "class"]);
+                                }), 128))
+                              ]),
+                              _: 2
+                            }, 1040, ["class"])
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  } else {
+                    _push3(`<!---->`);
+                  }
+                } else {
+                  return [
+                    __props.orientation === "vertical" && item.type === "label" && !__props.collapsed ? (openBlock(), createBlock("div", {
+                      key: 0,
+                      class: ui.value.label({ class: [props.ui?.label, item.ui?.label, item.class] })
+                    }, [
+                      createVNode(unref(ReuseLinkTemplate), {
+                        item,
+                        index
+                      }, null, 8, ["item", "index"])
+                    ], 2)) : item.type !== "label" ? (openBlock(), createBlock(_sfc_main$d, mergeProps({ key: 1 }, __props.orientation === "vertical" && item.children?.length && !__props.collapsed && item.type === "trigger" ? {} : unref(pickLinkProps)(item), { custom: "" }), {
+                      default: withCtx(({ active, ...slotProps }) => [
+                        (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? unref(NavigationMenuTrigger) : __props.orientation === "vertical" && item.children?.length && !__props.collapsed && !slotProps.href ? unref(AccordionTrigger) : unref(NavigationMenuLink)), {
+                          "as-child": "",
+                          active: active || item.active,
+                          disabled: item.disabled,
+                          onSelect: item.onSelect
+                        }, {
+                          default: withCtx(() => [
+                            __props.orientation === "vertical" && __props.collapsed && item.children?.length && (!!props.popover || !!item.popover) ? (openBlock(), createBlock(_sfc_main$a, mergeProps({ key: 0 }, { ...popoverProps.value, ...typeof item.popover === "boolean" ? {} : item.popover || {} }, {
+                              ui: { content: ui.value.content({ class: [props.ui?.content, item.ui?.content] }) }
+                            }), {
+                              content: withCtx(() => [
+                                renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                  item,
+                                  active: active || item.active,
+                                  index
+                                }, () => [
+                                  createVNode("ul", {
+                                    class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                  }, [
+                                    createVNode("li", {
+                                      class: ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })
+                                    }, toDisplayString(unref(get)(item, props.labelKey)), 3),
+                                    (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                      return openBlock(), createBlock("li", {
+                                        key: childIndex,
+                                        class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                      }, [
+                                        createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                          default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                            createVNode(unref(NavigationMenuLink), {
+                                              "as-child": "",
+                                              active: childActive,
+                                              onSelect: childItem.onSelect
+                                            }, {
+                                              default: withCtx(() => [
+                                                createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                  class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                                }), {
+                                                  default: withCtx(() => [
+                                                    childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                      key: 0,
+                                                      name: childItem.icon,
+                                                      class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                    createVNode("span", {
+                                                      class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                    }, [
+                                                      createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                      childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                        key: 0,
+                                                        name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                        class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                      }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                    ], 2)
+                                                  ]),
+                                                  _: 2
+                                                }, 1040, ["class"])
+                                              ]),
+                                              _: 2
+                                            }, 1032, ["active", "onSelect"])
+                                          ]),
+                                          _: 2
+                                        }, 1040)
+                                      ], 2);
+                                    }), 128))
+                                  ], 2)
+                                ])
+                              ]),
+                              default: withCtx(() => [
+                                createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                  class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                }), {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseLinkTemplate), {
+                                      item,
+                                      active: active || item.active,
+                                      index
+                                    }, null, 8, ["item", "active", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["class"])
+                              ]),
+                              _: 2
+                            }, 1040, ["ui"])) : __props.orientation === "vertical" && __props.collapsed && (!!props.tooltip || !!item.tooltip) ? (openBlock(), createBlock(_sfc_main$1$2, mergeProps({
+                              key: 1,
+                              text: unref(get)(item, props.labelKey)
+                            }, { ...tooltipProps.value, ...typeof item.tooltip === "boolean" ? {} : item.tooltip || {} }), {
+                              default: withCtx(() => [
+                                createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                  class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                                }), {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseLinkTemplate), {
+                                      item,
+                                      active: active || item.active,
+                                      index
+                                    }, null, 8, ["item", "active", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["class"])
+                              ]),
+                              _: 2
+                            }, 1040, ["text"])) : (openBlock(), createBlock(_sfc_main$1$1, mergeProps({ key: 2 }, slotProps, {
+                              class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: __props.orientation === "horizontal" || level > 0 })
+                            }), {
+                              default: withCtx(() => [
+                                createVNode(unref(ReuseLinkTemplate), {
+                                  item,
+                                  active: active || item.active,
+                                  index
+                                }, null, 8, ["item", "active", "index"])
+                              ]),
+                              _: 2
+                            }, 1040, ["class"]))
+                          ]),
+                          _: 2
+                        }, 1064, ["active", "disabled", "onSelect"])),
+                        __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? (openBlock(), createBlock(unref(NavigationMenuContent), mergeProps({ key: 0 }, contentProps.value, {
+                          class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                        }), {
+                          default: withCtx(() => [
+                            renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                              item,
+                              active: active || item.active,
+                              index
+                            }, () => [
+                              createVNode("ul", {
+                                class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                              }, [
+                                (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                  return openBlock(), createBlock("li", {
+                                    key: childIndex,
+                                    class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                  }, [
+                                    createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                      default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                        createVNode(unref(NavigationMenuLink), {
+                                          "as-child": "",
+                                          active: childActive,
+                                          onSelect: childItem.onSelect
+                                        }, {
+                                          default: withCtx(() => [
+                                            createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                              class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                            }), {
+                                              default: withCtx(() => [
+                                                childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                  key: 0,
+                                                  name: childItem.icon,
+                                                  class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                createVNode("div", {
+                                                  class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                                }, [
+                                                  createVNode("p", {
+                                                    class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                  }, [
+                                                    createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                    childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                      key: 0,
+                                                      name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                      class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                  ], 2),
+                                                  childItem.description ? (openBlock(), createBlock("p", {
+                                                    key: 0,
+                                                    class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                  }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                                ], 2)
+                                              ]),
+                                              _: 2
+                                            }, 1040, ["class"])
+                                          ]),
+                                          _: 2
+                                        }, 1032, ["active", "onSelect"])
+                                      ]),
+                                      _: 2
+                                    }, 1040)
+                                  ], 2);
+                                }), 128))
+                              ], 2)
+                            ])
+                          ]),
+                          _: 2
+                        }, 1040, ["class"])) : createCommentVNode("", true)
+                      ]),
+                      _: 2
+                    }, 1040)) : createCommentVNode("", true),
+                    __props.orientation === "vertical" && item.children?.length && !__props.collapsed ? (openBlock(), createBlock(unref(AccordionContent), {
+                      key: 2,
+                      class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                    }, {
+                      default: withCtx(() => [
+                        createVNode(unref(AccordionRoot), mergeProps({
+                          ...unref(accordionProps),
+                          defaultValue: getAccordionDefaultValue(item.children, level + 1)
+                        }, {
+                          as: "ul",
+                          class: ui.value.childList({ class: props.ui?.childList })
+                        }), {
+                          default: withCtx(() => [
+                            (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                              return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                                key: childIndex,
+                                item: childItem,
+                                index: childIndex,
+                                level: level + 1,
+                                class: ui.value.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })
+                              }, null, 8, ["item", "index", "level", "class"]);
+                            }), 128))
+                          ]),
+                          _: 2
+                        }, 1040, ["class"])
+                      ]),
+                      _: 2
+                    }, 1032, ["class"])) : createCommentVNode("", true)
+                  ];
+                }
+              }),
+              _: 2
+            }), _parent2, _scopeId);
+          } else {
+            return [
+              (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "vertical" && !__props.collapsed ? unref(AccordionItem) : unref(NavigationMenuItem)), {
+                as: "li",
+                value: item.value || (level > 0 ? `item-${level}-${index}` : `item-${index}`)
+              }, {
+                default: withCtx(() => [
+                  __props.orientation === "vertical" && item.type === "label" && !__props.collapsed ? (openBlock(), createBlock("div", {
+                    key: 0,
+                    class: ui.value.label({ class: [props.ui?.label, item.ui?.label, item.class] })
+                  }, [
+                    createVNode(unref(ReuseLinkTemplate), {
+                      item,
+                      index
+                    }, null, 8, ["item", "index"])
+                  ], 2)) : item.type !== "label" ? (openBlock(), createBlock(_sfc_main$d, mergeProps({ key: 1 }, __props.orientation === "vertical" && item.children?.length && !__props.collapsed && item.type === "trigger" ? {} : unref(pickLinkProps)(item), { custom: "" }), {
+                    default: withCtx(({ active, ...slotProps }) => [
+                      (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? unref(NavigationMenuTrigger) : __props.orientation === "vertical" && item.children?.length && !__props.collapsed && !slotProps.href ? unref(AccordionTrigger) : unref(NavigationMenuLink)), {
+                        "as-child": "",
+                        active: active || item.active,
+                        disabled: item.disabled,
+                        onSelect: item.onSelect
+                      }, {
+                        default: withCtx(() => [
+                          __props.orientation === "vertical" && __props.collapsed && item.children?.length && (!!props.popover || !!item.popover) ? (openBlock(), createBlock(_sfc_main$a, mergeProps({ key: 0 }, { ...popoverProps.value, ...typeof item.popover === "boolean" ? {} : item.popover || {} }, {
+                            ui: { content: ui.value.content({ class: [props.ui?.content, item.ui?.content] }) }
+                          }), {
+                            content: withCtx(() => [
+                              renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                                item,
+                                active: active || item.active,
+                                index
+                              }, () => [
+                                createVNode("ul", {
+                                  class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                                }, [
+                                  createVNode("li", {
+                                    class: ui.value.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })
+                                  }, toDisplayString(unref(get)(item, props.labelKey)), 3),
+                                  (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                    return openBlock(), createBlock("li", {
+                                      key: childIndex,
+                                      class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                    }, [
+                                      createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                        default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                          createVNode(unref(NavigationMenuLink), {
+                                            "as-child": "",
+                                            active: childActive,
+                                            onSelect: childItem.onSelect
+                                          }, {
+                                            default: withCtx(() => [
+                                              createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                                class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                              }), {
+                                                default: withCtx(() => [
+                                                  childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                    key: 0,
+                                                    name: childItem.icon,
+                                                    class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                                  }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                                  createVNode("span", {
+                                                    class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                  }, [
+                                                    createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                    childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                      key: 0,
+                                                      name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                      class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                  ], 2)
+                                                ]),
+                                                _: 2
+                                              }, 1040, ["class"])
+                                            ]),
+                                            _: 2
+                                          }, 1032, ["active", "onSelect"])
+                                        ]),
+                                        _: 2
+                                      }, 1040)
+                                    ], 2);
+                                  }), 128))
+                                ], 2)
+                              ])
+                            ]),
+                            default: withCtx(() => [
+                              createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                              }), {
+                                default: withCtx(() => [
+                                  createVNode(unref(ReuseLinkTemplate), {
+                                    item,
+                                    active: active || item.active,
+                                    index
+                                  }, null, 8, ["item", "active", "index"])
+                                ]),
+                                _: 2
+                              }, 1040, ["class"])
+                            ]),
+                            _: 2
+                          }, 1040, ["ui"])) : __props.orientation === "vertical" && __props.collapsed && (!!props.tooltip || !!item.tooltip) ? (openBlock(), createBlock(_sfc_main$1$2, mergeProps({
+                            key: 1,
+                            text: unref(get)(item, props.labelKey)
+                          }, { ...tooltipProps.value, ...typeof item.tooltip === "boolean" ? {} : item.tooltip || {} }), {
+                            default: withCtx(() => [
+                              createVNode(_sfc_main$1$1, mergeProps(slotProps, {
+                                class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })
+                              }), {
+                                default: withCtx(() => [
+                                  createVNode(unref(ReuseLinkTemplate), {
+                                    item,
+                                    active: active || item.active,
+                                    index
+                                  }, null, 8, ["item", "active", "index"])
+                                ]),
+                                _: 2
+                              }, 1040, ["class"])
+                            ]),
+                            _: 2
+                          }, 1040, ["text"])) : (openBlock(), createBlock(_sfc_main$1$1, mergeProps({ key: 2 }, slotProps, {
+                            class: ui.value.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: __props.orientation === "horizontal" || level > 0 })
+                          }), {
+                            default: withCtx(() => [
+                              createVNode(unref(ReuseLinkTemplate), {
+                                item,
+                                active: active || item.active,
+                                index
+                              }, null, 8, ["item", "active", "index"])
+                            ]),
+                            _: 2
+                          }, 1040, ["class"]))
+                        ]),
+                        _: 2
+                      }, 1064, ["active", "disabled", "onSelect"])),
+                      __props.orientation === "horizontal" && (item.children?.length || !!slots[item.slot ? `${item.slot}-content` : "item-content"]) ? (openBlock(), createBlock(unref(NavigationMenuContent), mergeProps({ key: 0 }, contentProps.value, {
+                        class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                      }), {
+                        default: withCtx(() => [
+                          renderSlot(_ctx.$slots, item.slot ? `${item.slot}-content` : "item-content", {
+                            item,
+                            active: active || item.active,
+                            index
+                          }, () => [
+                            createVNode("ul", {
+                              class: ui.value.childList({ class: [props.ui?.childList, item.ui?.childList] })
+                            }, [
+                              (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                                return openBlock(), createBlock("li", {
+                                  key: childIndex,
+                                  class: ui.value.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })
+                                }, [
+                                  createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(childItem), { custom: "" }), {
+                                    default: withCtx(({ active: childActive, ...childSlotProps }) => [
+                                      createVNode(unref(NavigationMenuLink), {
+                                        "as-child": "",
+                                        active: childActive,
+                                        onSelect: childItem.onSelect
+                                      }, {
+                                        default: withCtx(() => [
+                                          createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, childSlotProps, {
+                                            class: ui.value.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })
+                                          }), {
+                                            default: withCtx(() => [
+                                              childItem.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                                key: 0,
+                                                name: childItem.icon,
+                                                class: ui.value.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })
+                                              }, null, 8, ["name", "class"])) : createCommentVNode("", true),
+                                              createVNode("div", {
+                                                class: ui.value.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })
+                                              }, [
+                                                createVNode("p", {
+                                                  class: ui.value.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })
+                                                }, [
+                                                  createTextVNode(toDisplayString(unref(get)(childItem, props.labelKey)) + " ", 1),
+                                                  childItem.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                                                    key: 0,
+                                                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                                                    class: ui.value.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })
+                                                  }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                                ], 2),
+                                                childItem.description ? (openBlock(), createBlock("p", {
+                                                  key: 0,
+                                                  class: ui.value.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })
+                                                }, toDisplayString(childItem.description), 3)) : createCommentVNode("", true)
+                                              ], 2)
+                                            ]),
+                                            _: 2
+                                          }, 1040, ["class"])
+                                        ]),
+                                        _: 2
+                                      }, 1032, ["active", "onSelect"])
+                                    ]),
+                                    _: 2
+                                  }, 1040)
+                                ], 2);
+                              }), 128))
+                            ], 2)
+                          ])
+                        ]),
+                        _: 2
+                      }, 1040, ["class"])) : createCommentVNode("", true)
+                    ]),
+                    _: 2
+                  }, 1040)) : createCommentVNode("", true),
+                  __props.orientation === "vertical" && item.children?.length && !__props.collapsed ? (openBlock(), createBlock(unref(AccordionContent), {
+                    key: 2,
+                    class: ui.value.content({ class: [props.ui?.content, item.ui?.content] })
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(unref(AccordionRoot), mergeProps({
+                        ...unref(accordionProps),
+                        defaultValue: getAccordionDefaultValue(item.children, level + 1)
+                      }, {
+                        as: "ul",
+                        class: ui.value.childList({ class: props.ui?.childList })
+                      }), {
+                        default: withCtx(() => [
+                          (openBlock(true), createBlock(Fragment, null, renderList(item.children, (childItem, childIndex) => {
+                            return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                              key: childIndex,
+                              item: childItem,
+                              index: childIndex,
+                              level: level + 1,
+                              class: ui.value.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })
+                            }, null, 8, ["item", "index", "level", "class"]);
+                          }), 128))
+                        ]),
+                        _: 2
+                      }, 1040, ["class"])
+                    ]),
+                    _: 2
+                  }, 1032, ["class"])) : createCommentVNode("", true)
+                ]),
+                _: 2
+              }, 1032, ["value"]))
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+      _push(ssrRenderComponent(unref(NavigationMenuRoot), mergeProps({ ...unref(rootProps), ..._ctx.$attrs }, {
+        "data-collapsed": __props.collapsed,
+        class: ui.value.root({ class: [props.ui?.root, props.class] })
+      }), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            ssrRenderSlot(_ctx.$slots, "list-leading", {}, null, _push2, _parent2, _scopeId);
+            _push2(`<!--[-->`);
+            ssrRenderList(lists.value, (list, listIndex) => {
+              _push2(`<!--[-->`);
+              ssrRenderVNode(_push2, createVNode(resolveDynamicComponent(__props.orientation === "vertical" && !__props.collapsed ? unref(AccordionRoot) : unref(NavigationMenuList)), mergeProps({ ref_for: true }, __props.orientation === "vertical" && !__props.collapsed ? {
+                ...unref(accordionProps),
+                defaultValue: getAccordionDefaultValue(list)
+              } : {}, {
+                as: "ul",
+                class: ui.value.list({ class: props.ui?.list })
+              }), {
+                default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    _push3(`<!--[-->`);
+                    ssrRenderList(list, (item, index) => {
+                      _push3(ssrRenderComponent(unref(ReuseItemTemplate), {
+                        key: `list-${listIndex}-${index}`,
+                        item,
+                        index,
+                        class: ui.value.item({ class: [props.ui?.item, item.ui?.item] })
+                      }, null, _parent3, _scopeId2));
+                    });
+                    _push3(`<!--]-->`);
+                  } else {
+                    return [
+                      (openBlock(true), createBlock(Fragment, null, renderList(list, (item, index) => {
+                        return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                          key: `list-${listIndex}-${index}`,
+                          item,
+                          index,
+                          class: ui.value.item({ class: [props.ui?.item, item.ui?.item] })
+                        }, null, 8, ["item", "index", "class"]);
+                      }), 128))
+                    ];
+                  }
+                }),
+                _: 2
+              }), _parent2, _scopeId);
+              if (__props.orientation === "vertical" && listIndex < lists.value.length - 1) {
+                _push2(`<div class="${ssrRenderClass(ui.value.separator({ class: props.ui?.separator }))}"${_scopeId}></div>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`<!--]-->`);
+            });
+            _push2(`<!--]-->`);
+            ssrRenderSlot(_ctx.$slots, "list-trailing", {}, null, _push2, _parent2, _scopeId);
+            if (__props.orientation === "horizontal") {
+              _push2(`<div class="${ssrRenderClass(ui.value.viewportWrapper({ class: props.ui?.viewportWrapper }))}"${_scopeId}>`);
+              if (__props.arrow) {
+                _push2(ssrRenderComponent(unref(NavigationMenuIndicator), {
+                  class: ui.value.indicator({ class: props.ui?.indicator })
+                }, {
+                  default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                    if (_push3) {
+                      _push3(`<div class="${ssrRenderClass(ui.value.arrow({ class: props.ui?.arrow }))}"${_scopeId2}></div>`);
+                    } else {
+                      return [
+                        createVNode("div", {
+                          class: ui.value.arrow({ class: props.ui?.arrow })
+                        }, null, 2)
+                      ];
+                    }
+                  }),
+                  _: 1
+                }, _parent2, _scopeId));
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(ssrRenderComponent(unref(NavigationMenuViewport), {
+                class: ui.value.viewport({ class: props.ui?.viewport })
+              }, null, _parent2, _scopeId));
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+          } else {
+            return [
+              renderSlot(_ctx.$slots, "list-leading"),
+              (openBlock(true), createBlock(Fragment, null, renderList(lists.value, (list, listIndex) => {
+                return openBlock(), createBlock(Fragment, {
+                  key: `list-${listIndex}`
+                }, [
+                  (openBlock(), createBlock(resolveDynamicComponent(__props.orientation === "vertical" && !__props.collapsed ? unref(AccordionRoot) : unref(NavigationMenuList)), mergeProps({ ref_for: true }, __props.orientation === "vertical" && !__props.collapsed ? {
+                    ...unref(accordionProps),
+                    defaultValue: getAccordionDefaultValue(list)
+                  } : {}, {
+                    as: "ul",
+                    class: ui.value.list({ class: props.ui?.list })
+                  }), {
+                    default: withCtx(() => [
+                      (openBlock(true), createBlock(Fragment, null, renderList(list, (item, index) => {
+                        return openBlock(), createBlock(unref(ReuseItemTemplate), {
+                          key: `list-${listIndex}-${index}`,
+                          item,
+                          index,
+                          class: ui.value.item({ class: [props.ui?.item, item.ui?.item] })
+                        }, null, 8, ["item", "index", "class"]);
+                      }), 128))
+                    ]),
+                    _: 2
+                  }, 1040, ["class"])),
+                  __props.orientation === "vertical" && listIndex < lists.value.length - 1 ? (openBlock(), createBlock("div", {
+                    key: 0,
+                    class: ui.value.separator({ class: props.ui?.separator })
+                  }, null, 2)) : createCommentVNode("", true)
+                ], 64);
+              }), 128)),
+              renderSlot(_ctx.$slots, "list-trailing"),
+              __props.orientation === "horizontal" ? (openBlock(), createBlock("div", {
+                key: 0,
+                class: ui.value.viewportWrapper({ class: props.ui?.viewportWrapper })
+              }, [
+                __props.arrow ? (openBlock(), createBlock(unref(NavigationMenuIndicator), {
+                  key: 0,
+                  class: ui.value.indicator({ class: props.ui?.indicator })
+                }, {
+                  default: withCtx(() => [
+                    createVNode("div", {
+                      class: ui.value.arrow({ class: props.ui?.arrow })
+                    }, null, 2)
+                  ]),
+                  _: 1
+                }, 8, ["class"])) : createCommentVNode("", true),
+                createVNode(unref(NavigationMenuViewport), {
+                  class: ui.value.viewport({ class: props.ui?.viewport })
+                }, null, 8, ["class"])
+              ], 2)) : createCommentVNode("", true)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+      _push(`<!--]-->`);
+    };
+  }
+});
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue");
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+};
+const _imports_0 = publicAssetsURL("/mavrix_properties.png");
+const _sfc_main$8 = {
+  __name: "UDropdownMenuContent",
+  __ssrInlineRender: true,
+  props: {
+    items: { type: null, required: false },
+    portal: { type: [Boolean, String], required: false, skipCheck: true },
+    sub: { type: Boolean, required: false },
+    labelKey: { type: null, required: true },
+    checkedIcon: { type: [String, Object], required: false },
+    loadingIcon: { type: [String, Object], required: false },
+    externalIcon: { type: [Boolean, String, Object], required: false },
+    class: { type: null, required: false },
+    ui: { type: null, required: true },
+    uiOverride: { type: null, required: false },
+    loop: { type: Boolean, required: false },
+    side: { type: null, required: false },
+    sideOffset: { type: Number, required: false },
+    sideFlip: { type: Boolean, required: false },
+    align: { type: null, required: false },
+    alignOffset: { type: Number, required: false },
+    alignFlip: { type: Boolean, required: false },
+    avoidCollisions: { type: Boolean, required: false },
+    collisionBoundary: { type: null, required: false },
+    collisionPadding: { type: [Number, Object], required: false },
+    arrowPadding: { type: Number, required: false },
+    sticky: { type: String, required: false },
+    hideWhenDetached: { type: Boolean, required: false },
+    positionStrategy: { type: String, required: false },
+    updatePositionStrategy: { type: String, required: false },
+    disableUpdateOnLayoutShift: { type: Boolean, required: false },
+    prioritizePosition: { type: Boolean, required: false },
+    reference: { type: null, required: false }
+  },
+  emits: ["escapeKeyDown", "pointerDownOutside", "focusOutside", "interactOutside", "closeAutoFocus"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emits = __emit;
+    const slots = useSlots();
+    const { dir } = useLocale();
+    const appConfig = useAppConfig();
+    const portalProps = usePortal(toRef(() => props.portal));
+    const contentProps = useForwardPropsEmits(reactiveOmit(props, "sub", "items", "portal", "labelKey", "checkedIcon", "loadingIcon", "externalIcon", "class", "ui", "uiOverride"), emits);
+    const getProxySlots = () => omit(slots, ["default"]);
+    const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate();
+    const childrenIcon = computed(() => dir.value === "rtl" ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight);
+    const groups = computed(
+      () => props.items?.length ? isArrayOfArray(props.items) ? props.items : [props.items] : []
+    );
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[-->`);
+      _push(ssrRenderComponent(unref(DefineItemTemplate), null, {
+        default: withCtx(({ item, active, index }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            ssrRenderSlot(_ctx.$slots, item.slot || "item", {
+              item,
+              index
+            }, () => {
+              ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-leading` : "item-leading", {
+                item,
+                active,
+                index
+              }, () => {
+                if (item.loading) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: __props.loadingIcon || unref(appConfig).ui.icons.loading,
+                    class: __props.ui.itemLeadingIcon({ class: [__props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item?.color, loading: true })
+                  }, null, _parent2, _scopeId));
+                } else if (item.icon) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: item.icon,
+                    class: __props.ui.itemLeadingIcon({ class: [__props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item?.color, active })
+                  }, null, _parent2, _scopeId));
+                } else if (item.avatar) {
+                  _push2(ssrRenderComponent(_sfc_main$f, mergeProps({
+                    size: item.ui?.itemLeadingAvatarSize || __props.uiOverride?.itemLeadingAvatarSize || __props.ui.itemLeadingAvatarSize()
+                  }, item.avatar, {
+                    class: __props.ui.itemLeadingAvatar({ class: [__props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })
+                  }), null, _parent2, _scopeId));
+                } else {
+                  _push2(`<!---->`);
+                }
+              }, _push2, _parent2, _scopeId);
+              if (unref(get)(item, props.labelKey) || !!slots[item.slot ? `${item.slot}-label` : "item-label"]) {
+                _push2(`<span class="${ssrRenderClass(__props.ui.itemLabel({ class: [__props.uiOverride?.itemLabel, item.ui?.itemLabel], active }))}"${_scopeId}>`);
+                ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-label` : "item-label", {
+                  item,
+                  active,
+                  index
+                }, () => {
+                  _push2(`${ssrInterpolate(unref(get)(item, props.labelKey))}`);
+                }, _push2, _parent2, _scopeId);
+                if (item.target === "_blank" && __props.externalIcon !== false) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                    class: __props.ui.itemLabelExternalIcon({ class: [__props.uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item?.color, active })
+                  }, null, _parent2, _scopeId));
+                } else {
+                  _push2(`<!---->`);
+                }
+                _push2(`</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`<span class="${ssrRenderClass(__props.ui.itemTrailing({ class: [__props.uiOverride?.itemTrailing, item.ui?.itemTrailing] }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, item.slot ? `${item.slot}-trailing` : "item-trailing", {
+                item,
+                active,
+                index
+              }, () => {
+                if (item.children?.length) {
+                  _push2(ssrRenderComponent(_sfc_main$e, {
+                    name: childrenIcon.value,
+                    class: __props.ui.itemTrailingIcon({ class: [__props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item?.color, active })
+                  }, null, _parent2, _scopeId));
+                } else if (item.kbds?.length) {
+                  _push2(`<span class="${ssrRenderClass(__props.ui.itemTrailingKbds({ class: [__props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] }))}"${_scopeId}><!--[-->`);
+                  ssrRenderList(item.kbds, (kbd, kbdIndex) => {
+                    _push2(ssrRenderComponent(_sfc_main$h, mergeProps({
+                      key: kbdIndex,
+                      size: item.ui?.itemTrailingKbdsSize || __props.uiOverride?.itemTrailingKbdsSize || __props.ui.itemTrailingKbdsSize()
+                    }, { ref_for: true }, typeof kbd === "string" ? { value: kbd } : kbd), null, _parent2, _scopeId));
+                  });
+                  _push2(`<!--]--></span>`);
+                } else {
+                  _push2(`<!---->`);
+                }
+              }, _push2, _parent2, _scopeId);
+              _push2(ssrRenderComponent(unref(DropdownMenu).ItemIndicator, { "as-child": "" }, {
+                default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    _push3(ssrRenderComponent(_sfc_main$e, {
+                      name: __props.checkedIcon || unref(appConfig).ui.icons.check,
+                      class: __props.ui.itemTrailingIcon({ class: [__props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item?.color })
+                    }, null, _parent3, _scopeId2));
+                  } else {
+                    return [
+                      createVNode(_sfc_main$e, {
+                        name: __props.checkedIcon || unref(appConfig).ui.icons.check,
+                        class: __props.ui.itemTrailingIcon({ class: [__props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item?.color })
+                      }, null, 8, ["name", "class"])
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+              _push2(`</span>`);
+            }, _push2, _parent2, _scopeId);
+          } else {
+            return [
+              renderSlot(_ctx.$slots, item.slot || "item", {
+                item,
+                index
+              }, () => [
+                renderSlot(_ctx.$slots, item.slot ? `${item.slot}-leading` : "item-leading", {
+                  item,
+                  active,
+                  index
+                }, () => [
+                  item.loading ? (openBlock(), createBlock(_sfc_main$e, {
+                    key: 0,
+                    name: __props.loadingIcon || unref(appConfig).ui.icons.loading,
+                    class: __props.ui.itemLeadingIcon({ class: [__props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item?.color, loading: true })
+                  }, null, 8, ["name", "class"])) : item.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                    key: 1,
+                    name: item.icon,
+                    class: __props.ui.itemLeadingIcon({ class: [__props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item?.color, active })
+                  }, null, 8, ["name", "class"])) : item.avatar ? (openBlock(), createBlock(_sfc_main$f, mergeProps({
+                    key: 2,
+                    size: item.ui?.itemLeadingAvatarSize || __props.uiOverride?.itemLeadingAvatarSize || __props.ui.itemLeadingAvatarSize()
+                  }, item.avatar, {
+                    class: __props.ui.itemLeadingAvatar({ class: [__props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })
+                  }), null, 16, ["size", "class"])) : createCommentVNode("", true)
+                ]),
+                unref(get)(item, props.labelKey) || !!slots[item.slot ? `${item.slot}-label` : "item-label"] ? (openBlock(), createBlock("span", {
+                  key: 0,
+                  class: __props.ui.itemLabel({ class: [__props.uiOverride?.itemLabel, item.ui?.itemLabel], active })
+                }, [
+                  renderSlot(_ctx.$slots, item.slot ? `${item.slot}-label` : "item-label", {
+                    item,
+                    active,
+                    index
+                  }, () => [
+                    createTextVNode(toDisplayString(unref(get)(item, props.labelKey)), 1)
+                  ]),
+                  item.target === "_blank" && __props.externalIcon !== false ? (openBlock(), createBlock(_sfc_main$e, {
+                    key: 0,
+                    name: typeof __props.externalIcon === "string" ? __props.externalIcon : unref(appConfig).ui.icons.external,
+                    class: __props.ui.itemLabelExternalIcon({ class: [__props.uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item?.color, active })
+                  }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                ], 2)) : createCommentVNode("", true),
+                createVNode("span", {
+                  class: __props.ui.itemTrailing({ class: [__props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })
+                }, [
+                  renderSlot(_ctx.$slots, item.slot ? `${item.slot}-trailing` : "item-trailing", {
+                    item,
+                    active,
+                    index
+                  }, () => [
+                    item.children?.length ? (openBlock(), createBlock(_sfc_main$e, {
+                      key: 0,
+                      name: childrenIcon.value,
+                      class: __props.ui.itemTrailingIcon({ class: [__props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item?.color, active })
+                    }, null, 8, ["name", "class"])) : item.kbds?.length ? (openBlock(), createBlock("span", {
+                      key: 1,
+                      class: __props.ui.itemTrailingKbds({ class: [__props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })
+                    }, [
+                      (openBlock(true), createBlock(Fragment, null, renderList(item.kbds, (kbd, kbdIndex) => {
+                        return openBlock(), createBlock(_sfc_main$h, mergeProps({
+                          key: kbdIndex,
+                          size: item.ui?.itemTrailingKbdsSize || __props.uiOverride?.itemTrailingKbdsSize || __props.ui.itemTrailingKbdsSize()
+                        }, { ref_for: true }, typeof kbd === "string" ? { value: kbd } : kbd), null, 16, ["size"]);
+                      }), 128))
+                    ], 2)) : createCommentVNode("", true)
+                  ]),
+                  createVNode(unref(DropdownMenu).ItemIndicator, { "as-child": "" }, {
+                    default: withCtx(() => [
+                      createVNode(_sfc_main$e, {
+                        name: __props.checkedIcon || unref(appConfig).ui.icons.check,
+                        class: __props.ui.itemTrailingIcon({ class: [__props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item?.color })
+                      }, null, 8, ["name", "class"])
+                    ]),
+                    _: 2
+                  }, 1024)
+                ], 2)
+              ])
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+      _push(ssrRenderComponent(unref(DropdownMenu).Portal, unref(portalProps), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            ssrRenderVNode(_push2, createVNode(resolveDynamicComponent(__props.sub ? unref(DropdownMenu).SubContent : unref(DropdownMenu).Content), mergeProps({
+              class: props.class
+            }, unref(contentProps)), {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  ssrRenderSlot(_ctx.$slots, "content-top", {}, null, _push3, _parent3, _scopeId2);
+                  _push3(`<div role="presentation" class="${ssrRenderClass(__props.ui.viewport({ class: __props.uiOverride?.viewport }))}"${_scopeId2}><!--[-->`);
+                  ssrRenderList(groups.value, (group, groupIndex) => {
+                    _push3(ssrRenderComponent(unref(DropdownMenu).Group, {
+                      key: `group-${groupIndex}`,
+                      class: __props.ui.group({ class: __props.uiOverride?.group })
+                    }, {
+                      default: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(`<!--[-->`);
+                          ssrRenderList(group, (item, index) => {
+                            _push4(`<!--[-->`);
+                            if (item.type === "label") {
+                              _push4(ssrRenderComponent(unref(DropdownMenu).Label, {
+                                class: __props.ui.label({ class: [__props.uiOverride?.label, item.ui?.label, item.class] })
+                              }, {
+                                default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                                  if (_push5) {
+                                    _push5(ssrRenderComponent(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, _parent5, _scopeId4));
+                                  } else {
+                                    return [
+                                      createVNode(unref(ReuseItemTemplate), {
+                                        item,
+                                        index
+                                      }, null, 8, ["item", "index"])
+                                    ];
+                                  }
+                                }),
+                                _: 2
+                              }, _parent4, _scopeId3));
+                            } else if (item.type === "separator") {
+                              _push4(ssrRenderComponent(unref(DropdownMenu).Separator, {
+                                class: __props.ui.separator({ class: [__props.uiOverride?.separator, item.ui?.separator, item.class] })
+                              }, null, _parent4, _scopeId3));
+                            } else if (item?.children?.length) {
+                              _push4(ssrRenderComponent(unref(DropdownMenu).Sub, {
+                                open: item.open,
+                                "default-open": item.defaultOpen
+                              }, {
+                                default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                                  if (_push5) {
+                                    _push5(ssrRenderComponent(unref(DropdownMenu).SubTrigger, {
+                                      as: "button",
+                                      type: "button",
+                                      disabled: item.disabled,
+                                      "text-value": unref(get)(item, props.labelKey),
+                                      class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color })
+                                    }, {
+                                      default: withCtx((_5, _push6, _parent6, _scopeId5) => {
+                                        if (_push6) {
+                                          _push6(ssrRenderComponent(unref(ReuseItemTemplate), {
+                                            item,
+                                            index
+                                          }, null, _parent6, _scopeId5));
+                                        } else {
+                                          return [
+                                            createVNode(unref(ReuseItemTemplate), {
+                                              item,
+                                              index
+                                            }, null, 8, ["item", "index"])
+                                          ];
+                                        }
+                                      }),
+                                      _: 2
+                                    }, _parent5, _scopeId4));
+                                    _push5(ssrRenderComponent(_sfc_main$8, mergeProps({
+                                      sub: "",
+                                      class: props.class,
+                                      ui: __props.ui,
+                                      "ui-override": __props.uiOverride,
+                                      portal: __props.portal,
+                                      items: item.children,
+                                      align: "start",
+                                      "align-offset": -4,
+                                      "side-offset": 3,
+                                      "label-key": __props.labelKey,
+                                      "checked-icon": __props.checkedIcon,
+                                      "loading-icon": __props.loadingIcon,
+                                      "external-icon": __props.externalIcon
+                                    }, { ref_for: true }, item.content), createSlots({ _: 2 }, [
+                                      renderList(getProxySlots(), (_5, name) => {
+                                        return {
+                                          name,
+                                          fn: withCtx((slotData, _push6, _parent6, _scopeId5) => {
+                                            if (_push6) {
+                                              ssrRenderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData), null, _push6, _parent6, _scopeId5);
+                                            } else {
+                                              return [
+                                                renderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData))
+                                              ];
+                                            }
+                                          })
+                                        };
+                                      })
+                                    ]), _parent5, _scopeId4));
+                                  } else {
+                                    return [
+                                      createVNode(unref(DropdownMenu).SubTrigger, {
+                                        as: "button",
+                                        type: "button",
+                                        disabled: item.disabled,
+                                        "text-value": unref(get)(item, props.labelKey),
+                                        class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color })
+                                      }, {
+                                        default: withCtx(() => [
+                                          createVNode(unref(ReuseItemTemplate), {
+                                            item,
+                                            index
+                                          }, null, 8, ["item", "index"])
+                                        ]),
+                                        _: 2
+                                      }, 1032, ["disabled", "text-value", "class"]),
+                                      createVNode(_sfc_main$8, mergeProps({
+                                        sub: "",
+                                        class: props.class,
+                                        ui: __props.ui,
+                                        "ui-override": __props.uiOverride,
+                                        portal: __props.portal,
+                                        items: item.children,
+                                        align: "start",
+                                        "align-offset": -4,
+                                        "side-offset": 3,
+                                        "label-key": __props.labelKey,
+                                        "checked-icon": __props.checkedIcon,
+                                        "loading-icon": __props.loadingIcon,
+                                        "external-icon": __props.externalIcon
+                                      }, { ref_for: true }, item.content), createSlots({ _: 2 }, [
+                                        renderList(getProxySlots(), (_5, name) => {
+                                          return {
+                                            name,
+                                            fn: withCtx((slotData) => [
+                                              renderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData))
+                                            ])
+                                          };
+                                        })
+                                      ]), 1040, ["class", "ui", "ui-override", "portal", "items", "label-key", "checked-icon", "loading-icon", "external-icon"])
+                                    ];
+                                  }
+                                }),
+                                _: 2
+                              }, _parent4, _scopeId3));
+                            } else if (item.type === "checkbox") {
+                              _push4(ssrRenderComponent(unref(DropdownMenu).CheckboxItem, {
+                                "model-value": item.checked,
+                                disabled: item.disabled,
+                                "text-value": unref(get)(item, props.labelKey),
+                                class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color }),
+                                "onUpdate:modelValue": item.onUpdateChecked,
+                                onSelect: item.onSelect
+                              }, {
+                                default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                                  if (_push5) {
+                                    _push5(ssrRenderComponent(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, _parent5, _scopeId4));
+                                  } else {
+                                    return [
+                                      createVNode(unref(ReuseItemTemplate), {
+                                        item,
+                                        index
+                                      }, null, 8, ["item", "index"])
+                                    ];
+                                  }
+                                }),
+                                _: 2
+                              }, _parent4, _scopeId3));
+                            } else {
+                              _push4(ssrRenderComponent(unref(DropdownMenu).Item, {
+                                "as-child": "",
+                                disabled: item.disabled,
+                                "text-value": unref(get)(item, props.labelKey),
+                                onSelect: item.onSelect
+                              }, {
+                                default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                                  if (_push5) {
+                                    _push5(ssrRenderComponent(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(item), { custom: "" }), {
+                                      default: withCtx(({ active, ...slotProps }, _push6, _parent6, _scopeId5) => {
+                                        if (_push6) {
+                                          _push6(ssrRenderComponent(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                            class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                          }), {
+                                            default: withCtx((_5, _push7, _parent7, _scopeId6) => {
+                                              if (_push7) {
+                                                _push7(ssrRenderComponent(unref(ReuseItemTemplate), {
+                                                  item,
+                                                  active,
+                                                  index
+                                                }, null, _parent7, _scopeId6));
+                                              } else {
+                                                return [
+                                                  createVNode(unref(ReuseItemTemplate), {
+                                                    item,
+                                                    active,
+                                                    index
+                                                  }, null, 8, ["item", "active", "index"])
+                                                ];
+                                              }
+                                            }),
+                                            _: 2
+                                          }, _parent6, _scopeId5));
+                                        } else {
+                                          return [
+                                            createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                              class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                            }), {
+                                              default: withCtx(() => [
+                                                createVNode(unref(ReuseItemTemplate), {
+                                                  item,
+                                                  active,
+                                                  index
+                                                }, null, 8, ["item", "active", "index"])
+                                              ]),
+                                              _: 2
+                                            }, 1040, ["class"])
+                                          ];
+                                        }
+                                      }),
+                                      _: 2
+                                    }, _parent5, _scopeId4));
+                                  } else {
+                                    return [
+                                      createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(item), { custom: "" }), {
+                                        default: withCtx(({ active, ...slotProps }) => [
+                                          createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                            class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                          }), {
+                                            default: withCtx(() => [
+                                              createVNode(unref(ReuseItemTemplate), {
+                                                item,
+                                                active,
+                                                index
+                                              }, null, 8, ["item", "active", "index"])
+                                            ]),
+                                            _: 2
+                                          }, 1040, ["class"])
+                                        ]),
+                                        _: 2
+                                      }, 1040)
+                                    ];
+                                  }
+                                }),
+                                _: 2
+                              }, _parent4, _scopeId3));
+                            }
+                            _push4(`<!--]-->`);
+                          });
+                          _push4(`<!--]-->`);
+                        } else {
+                          return [
+                            (openBlock(true), createBlock(Fragment, null, renderList(group, (item, index) => {
+                              return openBlock(), createBlock(Fragment, {
+                                key: `group-${groupIndex}-${index}`
+                              }, [
+                                item.type === "label" ? (openBlock(), createBlock(unref(DropdownMenu).Label, {
+                                  key: 0,
+                                  class: __props.ui.label({ class: [__props.uiOverride?.label, item.ui?.label, item.class] })
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, 8, ["item", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["class"])) : item.type === "separator" ? (openBlock(), createBlock(unref(DropdownMenu).Separator, {
+                                  key: 1,
+                                  class: __props.ui.separator({ class: [__props.uiOverride?.separator, item.ui?.separator, item.class] })
+                                }, null, 8, ["class"])) : item?.children?.length ? (openBlock(), createBlock(unref(DropdownMenu).Sub, {
+                                  key: 2,
+                                  open: item.open,
+                                  "default-open": item.defaultOpen
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(DropdownMenu).SubTrigger, {
+                                      as: "button",
+                                      type: "button",
+                                      disabled: item.disabled,
+                                      "text-value": unref(get)(item, props.labelKey),
+                                      class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color })
+                                    }, {
+                                      default: withCtx(() => [
+                                        createVNode(unref(ReuseItemTemplate), {
+                                          item,
+                                          index
+                                        }, null, 8, ["item", "index"])
+                                      ]),
+                                      _: 2
+                                    }, 1032, ["disabled", "text-value", "class"]),
+                                    createVNode(_sfc_main$8, mergeProps({
+                                      sub: "",
+                                      class: props.class,
+                                      ui: __props.ui,
+                                      "ui-override": __props.uiOverride,
+                                      portal: __props.portal,
+                                      items: item.children,
+                                      align: "start",
+                                      "align-offset": -4,
+                                      "side-offset": 3,
+                                      "label-key": __props.labelKey,
+                                      "checked-icon": __props.checkedIcon,
+                                      "loading-icon": __props.loadingIcon,
+                                      "external-icon": __props.externalIcon
+                                    }, { ref_for: true }, item.content), createSlots({ _: 2 }, [
+                                      renderList(getProxySlots(), (_4, name) => {
+                                        return {
+                                          name,
+                                          fn: withCtx((slotData) => [
+                                            renderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData))
+                                          ])
+                                        };
+                                      })
+                                    ]), 1040, ["class", "ui", "ui-override", "portal", "items", "label-key", "checked-icon", "loading-icon", "external-icon"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["open", "default-open"])) : item.type === "checkbox" ? (openBlock(), createBlock(unref(DropdownMenu).CheckboxItem, {
+                                  key: 3,
+                                  "model-value": item.checked,
+                                  disabled: item.disabled,
+                                  "text-value": unref(get)(item, props.labelKey),
+                                  class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color }),
+                                  "onUpdate:modelValue": item.onUpdateChecked,
+                                  onSelect: item.onSelect
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, 8, ["item", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["model-value", "disabled", "text-value", "class", "onUpdate:modelValue", "onSelect"])) : (openBlock(), createBlock(unref(DropdownMenu).Item, {
+                                  key: 4,
+                                  "as-child": "",
+                                  disabled: item.disabled,
+                                  "text-value": unref(get)(item, props.labelKey),
+                                  onSelect: item.onSelect
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(item), { custom: "" }), {
+                                      default: withCtx(({ active, ...slotProps }) => [
+                                        createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                          class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                        }), {
+                                          default: withCtx(() => [
+                                            createVNode(unref(ReuseItemTemplate), {
+                                              item,
+                                              active,
+                                              index
+                                            }, null, 8, ["item", "active", "index"])
+                                          ]),
+                                          _: 2
+                                        }, 1040, ["class"])
+                                      ]),
+                                      _: 2
+                                    }, 1040)
+                                  ]),
+                                  _: 2
+                                }, 1032, ["disabled", "text-value", "onSelect"]))
+                              ], 64);
+                            }), 128))
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  });
+                  _push3(`<!--]--></div>`);
+                  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
+                  ssrRenderSlot(_ctx.$slots, "content-bottom", {}, null, _push3, _parent3, _scopeId2);
+                } else {
+                  return [
+                    renderSlot(_ctx.$slots, "content-top"),
+                    createVNode("div", {
+                      role: "presentation",
+                      class: __props.ui.viewport({ class: __props.uiOverride?.viewport })
+                    }, [
+                      (openBlock(true), createBlock(Fragment, null, renderList(groups.value, (group, groupIndex) => {
+                        return openBlock(), createBlock(unref(DropdownMenu).Group, {
+                          key: `group-${groupIndex}`,
+                          class: __props.ui.group({ class: __props.uiOverride?.group })
+                        }, {
+                          default: withCtx(() => [
+                            (openBlock(true), createBlock(Fragment, null, renderList(group, (item, index) => {
+                              return openBlock(), createBlock(Fragment, {
+                                key: `group-${groupIndex}-${index}`
+                              }, [
+                                item.type === "label" ? (openBlock(), createBlock(unref(DropdownMenu).Label, {
+                                  key: 0,
+                                  class: __props.ui.label({ class: [__props.uiOverride?.label, item.ui?.label, item.class] })
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, 8, ["item", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["class"])) : item.type === "separator" ? (openBlock(), createBlock(unref(DropdownMenu).Separator, {
+                                  key: 1,
+                                  class: __props.ui.separator({ class: [__props.uiOverride?.separator, item.ui?.separator, item.class] })
+                                }, null, 8, ["class"])) : item?.children?.length ? (openBlock(), createBlock(unref(DropdownMenu).Sub, {
+                                  key: 2,
+                                  open: item.open,
+                                  "default-open": item.defaultOpen
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(DropdownMenu).SubTrigger, {
+                                      as: "button",
+                                      type: "button",
+                                      disabled: item.disabled,
+                                      "text-value": unref(get)(item, props.labelKey),
+                                      class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color })
+                                    }, {
+                                      default: withCtx(() => [
+                                        createVNode(unref(ReuseItemTemplate), {
+                                          item,
+                                          index
+                                        }, null, 8, ["item", "index"])
+                                      ]),
+                                      _: 2
+                                    }, 1032, ["disabled", "text-value", "class"]),
+                                    createVNode(_sfc_main$8, mergeProps({
+                                      sub: "",
+                                      class: props.class,
+                                      ui: __props.ui,
+                                      "ui-override": __props.uiOverride,
+                                      portal: __props.portal,
+                                      items: item.children,
+                                      align: "start",
+                                      "align-offset": -4,
+                                      "side-offset": 3,
+                                      "label-key": __props.labelKey,
+                                      "checked-icon": __props.checkedIcon,
+                                      "loading-icon": __props.loadingIcon,
+                                      "external-icon": __props.externalIcon
+                                    }, { ref_for: true }, item.content), createSlots({ _: 2 }, [
+                                      renderList(getProxySlots(), (_3, name) => {
+                                        return {
+                                          name,
+                                          fn: withCtx((slotData) => [
+                                            renderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData))
+                                          ])
+                                        };
+                                      })
+                                    ]), 1040, ["class", "ui", "ui-override", "portal", "items", "label-key", "checked-icon", "loading-icon", "external-icon"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["open", "default-open"])) : item.type === "checkbox" ? (openBlock(), createBlock(unref(DropdownMenu).CheckboxItem, {
+                                  key: 3,
+                                  "model-value": item.checked,
+                                  disabled: item.disabled,
+                                  "text-value": unref(get)(item, props.labelKey),
+                                  class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color }),
+                                  "onUpdate:modelValue": item.onUpdateChecked,
+                                  onSelect: item.onSelect
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(unref(ReuseItemTemplate), {
+                                      item,
+                                      index
+                                    }, null, 8, ["item", "index"])
+                                  ]),
+                                  _: 2
+                                }, 1032, ["model-value", "disabled", "text-value", "class", "onUpdate:modelValue", "onSelect"])) : (openBlock(), createBlock(unref(DropdownMenu).Item, {
+                                  key: 4,
+                                  "as-child": "",
+                                  disabled: item.disabled,
+                                  "text-value": unref(get)(item, props.labelKey),
+                                  onSelect: item.onSelect
+                                }, {
+                                  default: withCtx(() => [
+                                    createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(item), { custom: "" }), {
+                                      default: withCtx(({ active, ...slotProps }) => [
+                                        createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                          class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                        }), {
+                                          default: withCtx(() => [
+                                            createVNode(unref(ReuseItemTemplate), {
+                                              item,
+                                              active,
+                                              index
+                                            }, null, 8, ["item", "active", "index"])
+                                          ]),
+                                          _: 2
+                                        }, 1040, ["class"])
+                                      ]),
+                                      _: 2
+                                    }, 1040)
+                                  ]),
+                                  _: 2
+                                }, 1032, ["disabled", "text-value", "onSelect"]))
+                              ], 64);
+                            }), 128))
+                          ]),
+                          _: 2
+                        }, 1032, ["class"]);
+                      }), 128))
+                    ], 2),
+                    renderSlot(_ctx.$slots, "default"),
+                    renderSlot(_ctx.$slots, "content-bottom")
+                  ];
+                }
+              }),
+              _: 3
+            }), _parent2, _scopeId);
+          } else {
+            return [
+              (openBlock(), createBlock(resolveDynamicComponent(__props.sub ? unref(DropdownMenu).SubContent : unref(DropdownMenu).Content), mergeProps({
+                class: props.class
+              }, unref(contentProps)), {
+                default: withCtx(() => [
+                  renderSlot(_ctx.$slots, "content-top"),
+                  createVNode("div", {
+                    role: "presentation",
+                    class: __props.ui.viewport({ class: __props.uiOverride?.viewport })
+                  }, [
+                    (openBlock(true), createBlock(Fragment, null, renderList(groups.value, (group, groupIndex) => {
+                      return openBlock(), createBlock(unref(DropdownMenu).Group, {
+                        key: `group-${groupIndex}`,
+                        class: __props.ui.group({ class: __props.uiOverride?.group })
+                      }, {
+                        default: withCtx(() => [
+                          (openBlock(true), createBlock(Fragment, null, renderList(group, (item, index) => {
+                            return openBlock(), createBlock(Fragment, {
+                              key: `group-${groupIndex}-${index}`
+                            }, [
+                              item.type === "label" ? (openBlock(), createBlock(unref(DropdownMenu).Label, {
+                                key: 0,
+                                class: __props.ui.label({ class: [__props.uiOverride?.label, item.ui?.label, item.class] })
+                              }, {
+                                default: withCtx(() => [
+                                  createVNode(unref(ReuseItemTemplate), {
+                                    item,
+                                    index
+                                  }, null, 8, ["item", "index"])
+                                ]),
+                                _: 2
+                              }, 1032, ["class"])) : item.type === "separator" ? (openBlock(), createBlock(unref(DropdownMenu).Separator, {
+                                key: 1,
+                                class: __props.ui.separator({ class: [__props.uiOverride?.separator, item.ui?.separator, item.class] })
+                              }, null, 8, ["class"])) : item?.children?.length ? (openBlock(), createBlock(unref(DropdownMenu).Sub, {
+                                key: 2,
+                                open: item.open,
+                                "default-open": item.defaultOpen
+                              }, {
+                                default: withCtx(() => [
+                                  createVNode(unref(DropdownMenu).SubTrigger, {
+                                    as: "button",
+                                    type: "button",
+                                    disabled: item.disabled,
+                                    "text-value": unref(get)(item, props.labelKey),
+                                    class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color })
+                                  }, {
+                                    default: withCtx(() => [
+                                      createVNode(unref(ReuseItemTemplate), {
+                                        item,
+                                        index
+                                      }, null, 8, ["item", "index"])
+                                    ]),
+                                    _: 2
+                                  }, 1032, ["disabled", "text-value", "class"]),
+                                  createVNode(_sfc_main$8, mergeProps({
+                                    sub: "",
+                                    class: props.class,
+                                    ui: __props.ui,
+                                    "ui-override": __props.uiOverride,
+                                    portal: __props.portal,
+                                    items: item.children,
+                                    align: "start",
+                                    "align-offset": -4,
+                                    "side-offset": 3,
+                                    "label-key": __props.labelKey,
+                                    "checked-icon": __props.checkedIcon,
+                                    "loading-icon": __props.loadingIcon,
+                                    "external-icon": __props.externalIcon
+                                  }, { ref_for: true }, item.content), createSlots({ _: 2 }, [
+                                    renderList(getProxySlots(), (_2, name) => {
+                                      return {
+                                        name,
+                                        fn: withCtx((slotData) => [
+                                          renderSlot(_ctx.$slots, name, mergeProps({ ref_for: true }, slotData))
+                                        ])
+                                      };
+                                    })
+                                  ]), 1040, ["class", "ui", "ui-override", "portal", "items", "label-key", "checked-icon", "loading-icon", "external-icon"])
+                                ]),
+                                _: 2
+                              }, 1032, ["open", "default-open"])) : item.type === "checkbox" ? (openBlock(), createBlock(unref(DropdownMenu).CheckboxItem, {
+                                key: 3,
+                                "model-value": item.checked,
+                                disabled: item.disabled,
+                                "text-value": unref(get)(item, props.labelKey),
+                                class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color }),
+                                "onUpdate:modelValue": item.onUpdateChecked,
+                                onSelect: item.onSelect
+                              }, {
+                                default: withCtx(() => [
+                                  createVNode(unref(ReuseItemTemplate), {
+                                    item,
+                                    index
+                                  }, null, 8, ["item", "index"])
+                                ]),
+                                _: 2
+                              }, 1032, ["model-value", "disabled", "text-value", "class", "onUpdate:modelValue", "onSelect"])) : (openBlock(), createBlock(unref(DropdownMenu).Item, {
+                                key: 4,
+                                "as-child": "",
+                                disabled: item.disabled,
+                                "text-value": unref(get)(item, props.labelKey),
+                                onSelect: item.onSelect
+                              }, {
+                                default: withCtx(() => [
+                                  createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(item), { custom: "" }), {
+                                    default: withCtx(({ active, ...slotProps }) => [
+                                      createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                        class: __props.ui.item({ class: [__props.uiOverride?.item, item.ui?.item, item.class], color: item?.color, active })
+                                      }), {
+                                        default: withCtx(() => [
+                                          createVNode(unref(ReuseItemTemplate), {
+                                            item,
+                                            active,
+                                            index
+                                          }, null, 8, ["item", "active", "index"])
+                                        ]),
+                                        _: 2
+                                      }, 1040, ["class"])
+                                    ]),
+                                    _: 2
+                                  }, 1040)
+                                ]),
+                                _: 2
+                              }, 1032, ["disabled", "text-value", "onSelect"]))
+                            ], 64);
+                          }), 128))
+                        ]),
+                        _: 2
+                      }, 1032, ["class"]);
+                    }), 128))
+                  ], 2),
+                  renderSlot(_ctx.$slots, "default"),
+                  renderSlot(_ctx.$slots, "content-bottom")
+                ]),
+                _: 3
+              }, 16, ["class"]))
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+      _push(`<!--]-->`);
+    };
+  }
+};
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/DropdownMenuContent.vue");
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+const theme$2 = {
+  "slots": {
+    "content": "min-w-32 bg-default shadow-lg rounded-md ring ring-default overflow-hidden data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-dropdown-menu-content-transform-origin) flex flex-col",
+    "viewport": "relative divide-y divide-default scroll-py-1 overflow-y-auto flex-1",
+    "arrow": "fill-default",
+    "group": "p-1 isolate",
+    "label": "w-full flex items-center font-semibold text-highlighted",
+    "separator": "-mx-1 my-1 h-px bg-border",
+    "item": "group relative w-full flex items-center select-none outline-none before:absolute before:z-[-1] before:inset-px before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75",
+    "itemLeadingIcon": "shrink-0",
+    "itemLeadingAvatar": "shrink-0",
+    "itemLeadingAvatarSize": "",
+    "itemTrailing": "ms-auto inline-flex gap-1.5 items-center",
+    "itemTrailingIcon": "shrink-0",
+    "itemTrailingKbds": "hidden lg:inline-flex items-center shrink-0",
+    "itemTrailingKbdsSize": "",
+    "itemLabel": "truncate",
+    "itemLabelExternalIcon": "inline-block size-3 align-top text-dimmed"
+  },
+  "variants": {
+    "color": {
+      "primary": "",
+      "secondary": "",
+      "success": "",
+      "info": "",
+      "warning": "",
+      "error": "",
+      "neutral": ""
+    },
+    "active": {
+      "true": {
+        "item": "text-highlighted before:bg-elevated",
+        "itemLeadingIcon": "text-default"
+      },
+      "false": {
+        "item": [
+          "text-default data-highlighted:text-highlighted data-[state=open]:text-highlighted data-highlighted:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50",
+          "transition-colors before:transition-colors"
+        ],
+        "itemLeadingIcon": [
+          "text-dimmed group-data-highlighted:text-default group-data-[state=open]:text-default",
+          "transition-colors"
+        ]
+      }
+    },
+    "loading": {
+      "true": {
+        "itemLeadingIcon": "animate-spin"
+      }
+    },
+    "size": {
+      "xs": {
+        "label": "p-1 text-xs gap-1",
+        "item": "p-1 text-xs gap-1",
+        "itemLeadingIcon": "size-4",
+        "itemLeadingAvatarSize": "3xs",
+        "itemTrailingIcon": "size-4",
+        "itemTrailingKbds": "gap-0.5",
+        "itemTrailingKbdsSize": "sm"
+      },
+      "sm": {
+        "label": "p-1.5 text-xs gap-1.5",
+        "item": "p-1.5 text-xs gap-1.5",
+        "itemLeadingIcon": "size-4",
+        "itemLeadingAvatarSize": "3xs",
+        "itemTrailingIcon": "size-4",
+        "itemTrailingKbds": "gap-0.5",
+        "itemTrailingKbdsSize": "sm"
+      },
+      "md": {
+        "label": "p-1.5 text-sm gap-1.5",
+        "item": "p-1.5 text-sm gap-1.5",
+        "itemLeadingIcon": "size-5",
+        "itemLeadingAvatarSize": "2xs",
+        "itemTrailingIcon": "size-5",
+        "itemTrailingKbds": "gap-0.5",
+        "itemTrailingKbdsSize": "md"
+      },
+      "lg": {
+        "label": "p-2 text-sm gap-2",
+        "item": "p-2 text-sm gap-2",
+        "itemLeadingIcon": "size-5",
+        "itemLeadingAvatarSize": "2xs",
+        "itemTrailingIcon": "size-5",
+        "itemTrailingKbds": "gap-1",
+        "itemTrailingKbdsSize": "md"
+      },
+      "xl": {
+        "label": "p-2 text-base gap-2",
+        "item": "p-2 text-base gap-2",
+        "itemLeadingIcon": "size-6",
+        "itemLeadingAvatarSize": "xs",
+        "itemTrailingIcon": "size-6",
+        "itemTrailingKbds": "gap-1",
+        "itemTrailingKbdsSize": "lg"
+      }
+    }
+  },
+  "compoundVariants": [
+    {
+      "color": "primary",
+      "active": false,
+      "class": {
+        "item": "text-primary data-highlighted:text-primary data-highlighted:before:bg-primary/10 data-[state=open]:before:bg-primary/10",
+        "itemLeadingIcon": "text-primary/75 group-data-highlighted:text-primary group-data-[state=open]:text-primary"
+      }
+    },
+    {
+      "color": "secondary",
+      "active": false,
+      "class": {
+        "item": "text-secondary data-highlighted:text-secondary data-highlighted:before:bg-secondary/10 data-[state=open]:before:bg-secondary/10",
+        "itemLeadingIcon": "text-secondary/75 group-data-highlighted:text-secondary group-data-[state=open]:text-secondary"
+      }
+    },
+    {
+      "color": "success",
+      "active": false,
+      "class": {
+        "item": "text-success data-highlighted:text-success data-highlighted:before:bg-success/10 data-[state=open]:before:bg-success/10",
+        "itemLeadingIcon": "text-success/75 group-data-highlighted:text-success group-data-[state=open]:text-success"
+      }
+    },
+    {
+      "color": "info",
+      "active": false,
+      "class": {
+        "item": "text-info data-highlighted:text-info data-highlighted:before:bg-info/10 data-[state=open]:before:bg-info/10",
+        "itemLeadingIcon": "text-info/75 group-data-highlighted:text-info group-data-[state=open]:text-info"
+      }
+    },
+    {
+      "color": "warning",
+      "active": false,
+      "class": {
+        "item": "text-warning data-highlighted:text-warning data-highlighted:before:bg-warning/10 data-[state=open]:before:bg-warning/10",
+        "itemLeadingIcon": "text-warning/75 group-data-highlighted:text-warning group-data-[state=open]:text-warning"
+      }
+    },
+    {
+      "color": "error",
+      "active": false,
+      "class": {
+        "item": "text-error data-highlighted:text-error data-highlighted:before:bg-error/10 data-[state=open]:before:bg-error/10",
+        "itemLeadingIcon": "text-error/75 group-data-highlighted:text-error group-data-[state=open]:text-error"
+      }
+    },
+    {
+      "color": "primary",
+      "active": true,
+      "class": {
+        "item": "text-primary before:bg-primary/10",
+        "itemLeadingIcon": "text-primary"
+      }
+    },
+    {
+      "color": "secondary",
+      "active": true,
+      "class": {
+        "item": "text-secondary before:bg-secondary/10",
+        "itemLeadingIcon": "text-secondary"
+      }
+    },
+    {
+      "color": "success",
+      "active": true,
+      "class": {
+        "item": "text-success before:bg-success/10",
+        "itemLeadingIcon": "text-success"
+      }
+    },
+    {
+      "color": "info",
+      "active": true,
+      "class": {
+        "item": "text-info before:bg-info/10",
+        "itemLeadingIcon": "text-info"
+      }
+    },
+    {
+      "color": "warning",
+      "active": true,
+      "class": {
+        "item": "text-warning before:bg-warning/10",
+        "itemLeadingIcon": "text-warning"
+      }
+    },
+    {
+      "color": "error",
+      "active": true,
+      "class": {
+        "item": "text-error before:bg-error/10",
+        "itemLeadingIcon": "text-error"
+      }
+    }
+  ],
+  "defaultVariants": {
+    "size": "md"
+  }
+};
+const _sfc_main$7 = {
+  __name: "UDropdownMenu",
+  __ssrInlineRender: true,
+  props: {
+    size: { type: null, required: false },
+    items: { type: null, required: false },
+    checkedIcon: { type: [String, Object], required: false },
+    loadingIcon: { type: [String, Object], required: false },
+    externalIcon: { type: [Boolean, String, Object], required: false, default: true },
+    content: { type: Object, required: false },
+    arrow: { type: [Boolean, Object], required: false },
+    portal: { type: [Boolean, String], required: false, skipCheck: true, default: true },
+    labelKey: { type: null, required: false, default: "label" },
+    disabled: { type: Boolean, required: false },
+    class: { type: null, required: false },
+    ui: { type: null, required: false },
+    defaultOpen: { type: Boolean, required: false },
+    open: { type: Boolean, required: false },
+    modal: { type: Boolean, required: false, default: true }
+  },
+  emits: ["update:open"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emits = __emit;
+    const slots = useSlots();
+    const appConfig = useAppConfig();
+    const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "open", "modal"), emits);
+    const contentProps = toRef(() => defu(props.content, { side: "bottom", sideOffset: 8, collisionPadding: 8 }));
+    const arrowProps = toRef(() => props.arrow);
+    const getProxySlots = () => omit(slots, ["default"]);
+    const ui = computed(() => tv({ extend: tv(theme$2), ...appConfig.ui?.dropdownMenu || {} })({
+      size: props.size
+    }));
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(DropdownMenuRoot), mergeProps(unref(rootProps), _attrs), {
+        default: withCtx(({ open }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (!!slots.default) {
+              _push2(ssrRenderComponent(unref(DropdownMenuTrigger), {
+                "as-child": "",
+                class: props.class,
+                disabled: __props.disabled
+              }, {
+                default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    ssrRenderSlot(_ctx.$slots, "default", { open }, null, _push3, _parent3, _scopeId2);
+                  } else {
+                    return [
+                      renderSlot(_ctx.$slots, "default", { open })
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(ssrRenderComponent(_sfc_main$8, mergeProps({
+              class: ui.value.content({ class: [!slots.default && props.class, props.ui?.content] }),
+              ui: ui.value,
+              "ui-override": props.ui
+            }, contentProps.value, {
+              items: __props.items,
+              portal: __props.portal,
+              "label-key": __props.labelKey,
+              "checked-icon": __props.checkedIcon,
+              "loading-icon": __props.loadingIcon,
+              "external-icon": __props.externalIcon
+            }), createSlots({
+              default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  if (!!__props.arrow) {
+                    _push3(ssrRenderComponent(unref(DropdownMenuArrow), mergeProps(arrowProps.value, {
+                      class: ui.value.arrow({ class: props.ui?.arrow })
+                    }), null, _parent3, _scopeId2));
+                  } else {
+                    _push3(`<!---->`);
+                  }
+                } else {
+                  return [
+                    !!__props.arrow ? (openBlock(), createBlock(unref(DropdownMenuArrow), mergeProps({ key: 0 }, arrowProps.value, {
+                      class: ui.value.arrow({ class: props.ui?.arrow })
+                    }), null, 16, ["class"])) : createCommentVNode("", true)
+                  ];
+                }
+              }),
+              _: 2
+            }, [
+              renderList(getProxySlots(), (_, name) => {
+                return {
+                  name,
+                  fn: withCtx((slotData, _push3, _parent3, _scopeId2) => {
+                    if (_push3) {
+                      ssrRenderSlot(_ctx.$slots, name, slotData, null, _push3, _parent3, _scopeId2);
+                    } else {
+                      return [
+                        renderSlot(_ctx.$slots, name, slotData)
+                      ];
+                    }
+                  })
+                };
+              })
+            ]), _parent2, _scopeId));
+          } else {
+            return [
+              !!slots.default ? (openBlock(), createBlock(unref(DropdownMenuTrigger), {
+                key: 0,
+                "as-child": "",
+                class: props.class,
+                disabled: __props.disabled
+              }, {
+                default: withCtx(() => [
+                  renderSlot(_ctx.$slots, "default", { open })
+                ]),
+                _: 2
+              }, 1032, ["class", "disabled"])) : createCommentVNode("", true),
+              createVNode(_sfc_main$8, mergeProps({
+                class: ui.value.content({ class: [!slots.default && props.class, props.ui?.content] }),
+                ui: ui.value,
+                "ui-override": props.ui
+              }, contentProps.value, {
+                items: __props.items,
+                portal: __props.portal,
+                "label-key": __props.labelKey,
+                "checked-icon": __props.checkedIcon,
+                "loading-icon": __props.loadingIcon,
+                "external-icon": __props.externalIcon
+              }), createSlots({
+                default: withCtx(() => [
+                  !!__props.arrow ? (openBlock(), createBlock(unref(DropdownMenuArrow), mergeProps({ key: 0 }, arrowProps.value, {
+                    class: ui.value.arrow({ class: props.ui?.arrow })
+                  }), null, 16, ["class"])) : createCommentVNode("", true)
+                ]),
+                _: 2
+              }, [
+                renderList(getProxySlots(), (_, name) => {
+                  return {
+                    name,
+                    fn: withCtx((slotData) => [
+                      renderSlot(_ctx.$slots, name, slotData)
+                    ])
+                  };
+                })
+              ]), 1040, ["class", "ui", "ui-override", "items", "portal", "label-key", "checked-icon", "loading-icon", "external-icon"])
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/DropdownMenu.vue");
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+const _sfc_main$6 = /* @__PURE__ */ defineComponent({
+  __name: "SocialDropdown",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const items = [
+      [
+        {
+          label: "Facebook",
+          icon: "i-lucide-facebook",
+          class: "mavrix-brand"
+        },
+        {
+          label: "Instagram",
+          icon: "i-lucide-instagram",
+          class: "mavrix-brand"
+        },
+        {
+          label: "Twitter",
+          icon: "i-lucide-twitter",
+          class: "mavrix-brand"
+        }
+      ],
+      [
+        {
+          label: "LinkedIn",
+          icon: "i-lucide-linkedin",
+          class: "mavrix-brand"
+        }
+      ]
+    ];
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UDropdownMenu = _sfc_main$7;
+      const _component_UButton = _sfc_main$c;
+      _push(ssrRenderComponent(_component_UDropdownMenu, mergeProps({
+        items,
+        ui: { content: "w-(--reka-dropdown-menu-trigger-width) " }
+      }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<div class="flex items-center bg-transparent space-x-2 cursor-pointer p-2 shadow-sm"${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_UButton, {
+              label: "Follow Us",
+              class: "w-46 button-mavrix-outline cursor-pointer p-2 shadow-sm",
+              color: "neutral",
+              variant: "outline",
+              block: "",
+              "trailing-icon": "i-lucide-chevron-down"
+            }, null, _parent2, _scopeId));
+            _push2(`</div>`);
+          } else {
+            return [
+              createVNode("div", { class: "flex items-center bg-transparent space-x-2 cursor-pointer p-2 shadow-sm" }, [
+                createVNode(_component_UButton, {
+                  label: "Follow Us",
+                  class: "w-46 button-mavrix-outline cursor-pointer p-2 shadow-sm",
+                  color: "neutral",
+                  variant: "outline",
+                  block: "",
+                  "trailing-icon": "i-lucide-chevron-down"
+                })
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+});
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/SocialDropdown.vue");
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+};
+const SocialDropdown = Object.assign(_sfc_main$6, { __name: "SocialDropdown" });
+const _sfc_main$5 = /* @__PURE__ */ defineComponent({
+  __name: "nav-menu",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const isOpen = ref(false);
+    const items = computed(() => [
+      { label: "Home", to: "/", activeClass: "menu-active" },
+      { label: "About Us", to: "/about", activeClass: "menu-active" },
+      { label: "Properties", to: "/buy/dubai/properties", activeClass: "menu-active" },
+      { label: "Projects", to: "/projects", activeClass: "menu-active" },
+      { label: "Our Services", to: "/services", activeClass: "menu-active" },
+      { label: "Our Team", to: "/agents", activeClass: "menu-active" },
+      { label: "Contact Us", to: "/contact", activeClass: "menu-active" }
+    ]);
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UNavigationMenu = _sfc_main$9;
+      const _component_NuxtLink = __nuxt_component_0;
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "mavrix-header fixed top-0 left-0 w-full z-50 backdrop-blur-sm bg-mavrix-900 shadow-md transition" }, _attrs))} data-v-c2970bc9><div class="max-w-7xl mx-auto" data-v-c2970bc9><div class="flex items-center justify-between px-4 py-3" data-v-c2970bc9><img${ssrRenderAttr("src", _imports_0)} alt="Mavrix Luxury Properties Logo" class="h-10 w-auto" data-v-c2970bc9><div class="hidden md:block" data-v-c2970bc9>`);
+      _push(ssrRenderComponent(_component_UNavigationMenu, { items: items.value }, null, _parent));
+      _push(`</div><div class="flex items-center space-x-3" data-v-c2970bc9><div class="hidden md:block" data-v-c2970bc9>`);
+      _push(ssrRenderComponent(SocialDropdown, null, null, _parent));
+      _push(`</div><button class="md:hidden p-2 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary" data-v-c2970bc9>`);
+      if (!isOpen.value) {
+        _push(`<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-v-c2970bc9><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" data-v-c2970bc9></path></svg>`);
+      } else {
+        _push(`<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-v-c2970bc9><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" data-v-c2970bc9></path></svg>`);
+      }
+      _push(`</button></div></div></div>`);
+      if (isOpen.value) {
+        _push(`<div class="md:hidden bg-mavrix-900/95 backdrop-blur-lg text-white py-6 space-y-4 shadow-lg" data-v-c2970bc9><nav class="flex flex-col items-start pl-8 space-y-3" data-v-c2970bc9><!--[-->`);
+        ssrRenderList(items.value, (item) => {
+          _push(ssrRenderComponent(_component_NuxtLink, {
+            key: item.label,
+            to: item.to,
+            onClick: ($event) => isOpen.value = false,
+            class: "block text-base font-medium hover:text-primary transition",
+            "active-class": "menu-active"
+          }, {
+            default: withCtx((_, _push2, _parent2, _scopeId) => {
+              if (_push2) {
+                _push2(`${ssrInterpolate(item.label)}`);
+              } else {
+                return [
+                  createTextVNode(toDisplayString(item.label), 1)
+                ];
+              }
+            }),
+            _: 2
+          }, _parent));
+        });
+        _push(`<!--]--></nav></div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</header>`);
+    };
+  }
+});
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/header/nav-menu.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+const NavigationMenu = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$5, [["__scopeId", "data-v-c2970bc9"]]), { __name: "HeaderNavMenu" });
+const _sfc_main$4 = {
+  __name: "NavBar",
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(_attrs)}>`);
+      _push(ssrRenderComponent(NavigationMenu, null, null, _parent));
+      _push(`</div>`);
+    };
+  }
+};
+const _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/NavBar.vue");
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+const theme$1 = {
+  "slots": {
+    "root": "xl:grid xl:grid-cols-3 xl:gap-8",
+    "left": "mb-10 xl:mb-0",
+    "center": "flex flex-col lg:grid grid-flow-col auto-cols-fr gap-8 xl:col-span-2",
+    "right": "mt-10 xl:mt-0",
+    "label": "text-sm font-semibold",
+    "list": "mt-6 space-y-4",
+    "item": "relative",
+    "link": "group text-sm flex items-center gap-1.5 focus-visible:outline-primary",
+    "linkLeadingIcon": "size-5 shrink-0",
+    "linkLabel": "truncate",
+    "linkLabelExternalIcon": "size-3 absolute top-0 text-dimmed inline-block"
+  },
+  "variants": {
+    "active": {
+      "true": {
+        "link": "text-primary font-medium"
+      },
+      "false": {
+        "link": [
+          "text-muted hover:text-default",
+          "transition-colors"
+        ]
+      }
+    }
+  }
+};
+const _sfc_main$3 = {
+  __name: "UFooterColumns",
+  __ssrInlineRender: true,
+  props: {
+    as: { type: null, required: false, default: "nav" },
+    class: { type: null, required: false },
+    columns: { type: Array, required: false },
+    ui: { type: null, required: false }
+  },
+  setup(__props) {
+    const props = __props;
+    const slots = useSlots();
+    const appConfig = useAppConfig();
+    const ui = computed(() => tv({ extend: tv(theme$1), ...appConfig.ui?.footerColumns || {} })());
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(Primitive), mergeProps({
+        as: __props.as,
+        class: ui.value.root({ class: [props.ui?.root, props.class] })
+      }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (!!slots.left) {
+              _push2(`<div class="${ssrRenderClass(ui.value.left({ class: props.ui?.left }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "left", {}, null, _push2, _parent2, _scopeId);
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            if (!!slots.default || __props.columns?.length) {
+              _push2(`<div class="${ssrRenderClass(ui.value.center({ class: props.ui?.center }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "default", {}, () => {
+                _push2(`<!--[-->`);
+                ssrRenderList(__props.columns, (column, index) => {
+                  _push2(`<div${_scopeId}><h3 class="${ssrRenderClass(ui.value.label({ class: props.ui?.label }))}"${_scopeId}>`);
+                  ssrRenderSlot(_ctx.$slots, "column-label", { column }, () => {
+                    _push2(`${ssrInterpolate(column.label)}`);
+                  }, _push2, _parent2, _scopeId);
+                  _push2(`</h3><ul class="${ssrRenderClass(ui.value.list({ class: props.ui?.list }))}"${_scopeId}><!--[-->`);
+                  ssrRenderList(column.children, (link, linkIndex) => {
+                    _push2(`<li class="${ssrRenderClass(ui.value.item({ class: [props.ui?.item, link.ui?.item] }))}"${_scopeId}>`);
+                    _push2(ssrRenderComponent(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(link), { custom: "" }), {
+                      default: withCtx(({ active, ...slotProps }, _push3, _parent3, _scopeId2) => {
+                        if (_push3) {
+                          _push3(ssrRenderComponent(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                            class: ui.value.link({ class: [props.ui?.link, link.ui?.link, link.class], active })
+                          }), {
+                            default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                              if (_push4) {
+                                ssrRenderSlot(_ctx.$slots, "link", {
+                                  link,
+                                  active
+                                }, () => {
+                                  ssrRenderSlot(_ctx.$slots, "link-leading", {
+                                    link,
+                                    active
+                                  }, () => {
+                                    if (link.icon) {
+                                      _push4(ssrRenderComponent(_sfc_main$e, {
+                                        name: link.icon,
+                                        class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })
+                                      }, null, _parent4, _scopeId3));
+                                    } else {
+                                      _push4(`<!---->`);
+                                    }
+                                  }, _push4, _parent4, _scopeId3);
+                                  if (link.label || !!slots["link-label"]) {
+                                    _push4(`<span class="${ssrRenderClass(ui.value.linkLabel({ class: [props.ui?.linkLabel, link.ui?.linkLabel], active }))}"${_scopeId3}>`);
+                                    ssrRenderSlot(_ctx.$slots, "link-label", {
+                                      link,
+                                      active
+                                    }, () => {
+                                      _push4(`${ssrInterpolate(link.label)}`);
+                                    }, _push4, _parent4, _scopeId3);
+                                    if (link.target === "_blank") {
+                                      _push4(ssrRenderComponent(_sfc_main$e, {
+                                        name: unref(appConfig).ui.icons.external,
+                                        class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, link.ui?.linkLabelExternalIcon], active })
+                                      }, null, _parent4, _scopeId3));
+                                    } else {
+                                      _push4(`<!---->`);
+                                    }
+                                    _push4(`</span>`);
+                                  } else {
+                                    _push4(`<!---->`);
+                                  }
+                                  ssrRenderSlot(_ctx.$slots, "link-trailing", {
+                                    link,
+                                    active
+                                  }, null, _push4, _parent4, _scopeId3);
+                                }, _push4, _parent4, _scopeId3);
+                              } else {
+                                return [
+                                  renderSlot(_ctx.$slots, "link", {
+                                    link,
+                                    active
+                                  }, () => [
+                                    renderSlot(_ctx.$slots, "link-leading", {
+                                      link,
+                                      active
+                                    }, () => [
+                                      link.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                        key: 0,
+                                        name: link.icon,
+                                        class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })
+                                      }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                    ]),
+                                    link.label || !!slots["link-label"] ? (openBlock(), createBlock("span", {
+                                      key: 0,
+                                      class: ui.value.linkLabel({ class: [props.ui?.linkLabel, link.ui?.linkLabel], active })
+                                    }, [
+                                      renderSlot(_ctx.$slots, "link-label", {
+                                        link,
+                                        active
+                                      }, () => [
+                                        createTextVNode(toDisplayString(link.label), 1)
+                                      ]),
+                                      link.target === "_blank" ? (openBlock(), createBlock(_sfc_main$e, {
+                                        key: 0,
+                                        name: unref(appConfig).ui.icons.external,
+                                        class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, link.ui?.linkLabelExternalIcon], active })
+                                      }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                    ], 2)) : createCommentVNode("", true),
+                                    renderSlot(_ctx.$slots, "link-trailing", {
+                                      link,
+                                      active
+                                    })
+                                  ])
+                                ];
+                              }
+                            }),
+                            _: 2
+                          }, _parent3, _scopeId2));
+                        } else {
+                          return [
+                            createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                              class: ui.value.link({ class: [props.ui?.link, link.ui?.link, link.class], active })
+                            }), {
+                              default: withCtx(() => [
+                                renderSlot(_ctx.$slots, "link", {
+                                  link,
+                                  active
+                                }, () => [
+                                  renderSlot(_ctx.$slots, "link-leading", {
+                                    link,
+                                    active
+                                  }, () => [
+                                    link.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                      key: 0,
+                                      name: link.icon,
+                                      class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })
+                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                  ]),
+                                  link.label || !!slots["link-label"] ? (openBlock(), createBlock("span", {
+                                    key: 0,
+                                    class: ui.value.linkLabel({ class: [props.ui?.linkLabel, link.ui?.linkLabel], active })
+                                  }, [
+                                    renderSlot(_ctx.$slots, "link-label", {
+                                      link,
+                                      active
+                                    }, () => [
+                                      createTextVNode(toDisplayString(link.label), 1)
+                                    ]),
+                                    link.target === "_blank" ? (openBlock(), createBlock(_sfc_main$e, {
+                                      key: 0,
+                                      name: unref(appConfig).ui.icons.external,
+                                      class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, link.ui?.linkLabelExternalIcon], active })
+                                    }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                  ], 2)) : createCommentVNode("", true),
+                                  renderSlot(_ctx.$slots, "link-trailing", {
+                                    link,
+                                    active
+                                  })
+                                ])
+                              ]),
+                              _: 2
+                            }, 1040, ["class"])
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent2, _scopeId));
+                    _push2(`</li>`);
+                  });
+                  _push2(`<!--]--></ul></div>`);
+                });
+                _push2(`<!--]-->`);
+              }, _push2, _parent2, _scopeId);
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            if (!!slots.right) {
+              _push2(`<div class="${ssrRenderClass(ui.value.right({ class: props.ui?.right }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "right", {}, null, _push2, _parent2, _scopeId);
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+          } else {
+            return [
+              !!slots.left ? (openBlock(), createBlock("div", {
+                key: 0,
+                class: ui.value.left({ class: props.ui?.left })
+              }, [
+                renderSlot(_ctx.$slots, "left")
+              ], 2)) : createCommentVNode("", true),
+              !!slots.default || __props.columns?.length ? (openBlock(), createBlock("div", {
+                key: 1,
+                class: ui.value.center({ class: props.ui?.center })
+              }, [
+                renderSlot(_ctx.$slots, "default", {}, () => [
+                  (openBlock(true), createBlock(Fragment, null, renderList(__props.columns, (column, index) => {
+                    return openBlock(), createBlock("div", { key: index }, [
+                      createVNode("h3", {
+                        class: ui.value.label({ class: props.ui?.label })
+                      }, [
+                        renderSlot(_ctx.$slots, "column-label", { column }, () => [
+                          createTextVNode(toDisplayString(column.label), 1)
+                        ])
+                      ], 2),
+                      createVNode("ul", {
+                        class: ui.value.list({ class: props.ui?.list })
+                      }, [
+                        (openBlock(true), createBlock(Fragment, null, renderList(column.children, (link, linkIndex) => {
+                          return openBlock(), createBlock("li", {
+                            key: linkIndex,
+                            class: ui.value.item({ class: [props.ui?.item, link.ui?.item] })
+                          }, [
+                            createVNode(_sfc_main$d, mergeProps({ ref_for: true }, unref(pickLinkProps)(link), { custom: "" }), {
+                              default: withCtx(({ active, ...slotProps }) => [
+                                createVNode(_sfc_main$1$1, mergeProps({ ref_for: true }, slotProps, {
+                                  class: ui.value.link({ class: [props.ui?.link, link.ui?.link, link.class], active })
+                                }), {
+                                  default: withCtx(() => [
+                                    renderSlot(_ctx.$slots, "link", {
+                                      link,
+                                      active
+                                    }, () => [
+                                      renderSlot(_ctx.$slots, "link-leading", {
+                                        link,
+                                        active
+                                      }, () => [
+                                        link.icon ? (openBlock(), createBlock(_sfc_main$e, {
+                                          key: 0,
+                                          name: link.icon,
+                                          class: ui.value.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })
+                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                      ]),
+                                      link.label || !!slots["link-label"] ? (openBlock(), createBlock("span", {
+                                        key: 0,
+                                        class: ui.value.linkLabel({ class: [props.ui?.linkLabel, link.ui?.linkLabel], active })
+                                      }, [
+                                        renderSlot(_ctx.$slots, "link-label", {
+                                          link,
+                                          active
+                                        }, () => [
+                                          createTextVNode(toDisplayString(link.label), 1)
+                                        ]),
+                                        link.target === "_blank" ? (openBlock(), createBlock(_sfc_main$e, {
+                                          key: 0,
+                                          name: unref(appConfig).ui.icons.external,
+                                          class: ui.value.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, link.ui?.linkLabelExternalIcon], active })
+                                        }, null, 8, ["name", "class"])) : createCommentVNode("", true)
+                                      ], 2)) : createCommentVNode("", true),
+                                      renderSlot(_ctx.$slots, "link-trailing", {
+                                        link,
+                                        active
+                                      })
+                                    ])
+                                  ]),
+                                  _: 2
+                                }, 1040, ["class"])
+                              ]),
+                              _: 2
+                            }, 1040)
+                          ], 2);
+                        }), 128))
+                      ], 2)
+                    ]);
+                  }), 128))
+                ])
+              ], 2)) : createCommentVNode("", true),
+              !!slots.right ? (openBlock(), createBlock("div", {
+                key: 2,
+                class: ui.value.right({ class: props.ui?.right })
+              }, [
+                renderSlot(_ctx.$slots, "right")
+              ], 2)) : createCommentVNode("", true)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/FooterColumns.vue");
+  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+};
+const theme = {
+  "slots": {
+    "root": "",
+    "wrapper": "",
+    "labelWrapper": "flex content-center items-center justify-between",
+    "label": "block font-medium text-default",
+    "container": "mt-1 relative",
+    "description": "text-muted",
+    "error": "mt-2 text-error",
+    "hint": "text-muted",
+    "help": "mt-2 text-muted"
+  },
+  "variants": {
+    "size": {
+      "xs": {
+        "root": "text-xs"
+      },
+      "sm": {
+        "root": "text-xs"
+      },
+      "md": {
+        "root": "text-sm"
+      },
+      "lg": {
+        "root": "text-sm"
+      },
+      "xl": {
+        "root": "text-base"
+      }
+    },
+    "required": {
+      "true": {
+        "label": "after:content-['*'] after:ms-0.5 after:text-error"
+      }
+    }
+  },
+  "defaultVariants": {
+    "size": "md"
+  }
+};
+const _sfc_main$2 = {
+  __name: "UFormField",
+  __ssrInlineRender: true,
+  props: {
+    as: { type: null, required: false },
+    name: { type: String, required: false },
+    errorPattern: { type: null, required: false },
+    label: { type: String, required: false },
+    description: { type: String, required: false },
+    help: { type: String, required: false },
+    error: { type: [Boolean, String], required: false },
+    hint: { type: String, required: false },
+    size: { type: null, required: false },
+    required: { type: Boolean, required: false },
+    eagerValidation: { type: Boolean, required: false },
+    validateOnInputDelay: { type: Number, required: false },
+    class: { type: null, required: false },
+    ui: { type: null, required: false }
+  },
+  setup(__props) {
+    const props = __props;
+    const slots = useSlots();
+    const appConfig = useAppConfig();
+    const ui = computed(() => tv({ extend: tv(theme), ...appConfig.ui?.formField || {} })({
+      size: props.size,
+      required: props.required
+    }));
+    const formErrors = inject(formErrorsInjectionKey, null);
+    const error = computed(() => props.error || formErrors?.value?.find((error2) => error2.name === props.name || props.errorPattern && error2.name?.match(props.errorPattern))?.message);
+    const id = ref(useId());
+    const ariaId = id.value;
+    const formInputs = inject(formInputsInjectionKey, void 0);
+    watch(id, () => {
+      if (formInputs && props.name) {
+        formInputs.value[props.name] = { id: id.value, pattern: props.errorPattern };
+      }
+    }, { immediate: true });
+    provide(inputIdInjectionKey, id);
+    provide(formFieldInjectionKey, computed(() => ({
+      error: error.value,
+      name: props.name,
+      size: props.size,
+      eagerValidation: props.eagerValidation,
+      validateOnInputDelay: props.validateOnInputDelay,
+      errorPattern: props.errorPattern,
+      hint: props.hint,
+      description: props.description,
+      help: props.help,
+      ariaId
+    })));
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(Primitive), mergeProps({
+        as: __props.as,
+        class: ui.value.root({ class: [props.ui?.root, props.class] })
+      }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<div class="${ssrRenderClass(ui.value.wrapper({ class: props.ui?.wrapper }))}"${_scopeId}>`);
+            if (__props.label || !!slots.label) {
+              _push2(`<div class="${ssrRenderClass(ui.value.labelWrapper({ class: props.ui?.labelWrapper }))}"${_scopeId}>`);
+              _push2(ssrRenderComponent(unref(Label), {
+                for: id.value,
+                class: ui.value.label({ class: props.ui?.label })
+              }, {
+                default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    ssrRenderSlot(_ctx.$slots, "label", { label: __props.label }, () => {
+                      _push3(`${ssrInterpolate(__props.label)}`);
+                    }, _push3, _parent3, _scopeId2);
+                  } else {
+                    return [
+                      renderSlot(_ctx.$slots, "label", { label: __props.label }, () => [
+                        createTextVNode(toDisplayString(__props.label), 1)
+                      ])
+                    ];
+                  }
+                }),
+                _: 3
+              }, _parent2, _scopeId));
+              if (__props.hint || !!slots.hint) {
+                _push2(`<span${ssrRenderAttr("id", `${unref(ariaId)}-hint`)} class="${ssrRenderClass(ui.value.hint({ class: props.ui?.hint }))}"${_scopeId}>`);
+                ssrRenderSlot(_ctx.$slots, "hint", { hint: __props.hint }, () => {
+                  _push2(`${ssrInterpolate(__props.hint)}`);
+                }, _push2, _parent2, _scopeId);
+                _push2(`</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            if (__props.description || !!slots.description) {
+              _push2(`<p${ssrRenderAttr("id", `${unref(ariaId)}-description`)} class="${ssrRenderClass(ui.value.description({ class: props.ui?.description }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "description", { description: __props.description }, () => {
+                _push2(`${ssrInterpolate(__props.description)}`);
+              }, _push2, _parent2, _scopeId);
+              _push2(`</p>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div><div class="${ssrRenderClass([(__props.label || !!slots.label || __props.description || !!slots.description) && ui.value.container({ class: props.ui?.container })])}"${_scopeId}>`);
+            ssrRenderSlot(_ctx.$slots, "default", { error: error.value }, null, _push2, _parent2, _scopeId);
+            if (typeof error.value === "string" && error.value || !!slots.error) {
+              _push2(`<div${ssrRenderAttr("id", `${unref(ariaId)}-error`)} class="${ssrRenderClass(ui.value.error({ class: props.ui?.error }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "error", { error: error.value }, () => {
+                _push2(`${ssrInterpolate(error.value)}`);
+              }, _push2, _parent2, _scopeId);
+              _push2(`</div>`);
+            } else if (__props.help || !!slots.help) {
+              _push2(`<div${ssrRenderAttr("id", `${unref(ariaId)}-help`)} class="${ssrRenderClass(ui.value.help({ class: props.ui?.help }))}"${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "help", { help: __props.help }, () => {
+                _push2(`${ssrInterpolate(__props.help)}`);
+              }, _push2, _parent2, _scopeId);
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div>`);
+          } else {
+            return [
+              createVNode("div", {
+                class: ui.value.wrapper({ class: props.ui?.wrapper })
+              }, [
+                __props.label || !!slots.label ? (openBlock(), createBlock("div", {
+                  key: 0,
+                  class: ui.value.labelWrapper({ class: props.ui?.labelWrapper })
+                }, [
+                  createVNode(unref(Label), {
+                    for: id.value,
+                    class: ui.value.label({ class: props.ui?.label })
+                  }, {
+                    default: withCtx(() => [
+                      renderSlot(_ctx.$slots, "label", { label: __props.label }, () => [
+                        createTextVNode(toDisplayString(__props.label), 1)
+                      ])
+                    ]),
+                    _: 3
+                  }, 8, ["for", "class"]),
+                  __props.hint || !!slots.hint ? (openBlock(), createBlock("span", {
+                    key: 0,
+                    id: `${unref(ariaId)}-hint`,
+                    class: ui.value.hint({ class: props.ui?.hint })
+                  }, [
+                    renderSlot(_ctx.$slots, "hint", { hint: __props.hint }, () => [
+                      createTextVNode(toDisplayString(__props.hint), 1)
+                    ])
+                  ], 10, ["id"])) : createCommentVNode("", true)
+                ], 2)) : createCommentVNode("", true),
+                __props.description || !!slots.description ? (openBlock(), createBlock("p", {
+                  key: 1,
+                  id: `${unref(ariaId)}-description`,
+                  class: ui.value.description({ class: props.ui?.description })
+                }, [
+                  renderSlot(_ctx.$slots, "description", { description: __props.description }, () => [
+                    createTextVNode(toDisplayString(__props.description), 1)
+                  ])
+                ], 10, ["id"])) : createCommentVNode("", true)
+              ], 2),
+              createVNode("div", {
+                class: [(__props.label || !!slots.label || __props.description || !!slots.description) && ui.value.container({ class: props.ui?.container })]
+              }, [
+                renderSlot(_ctx.$slots, "default", { error: error.value }),
+                typeof error.value === "string" && error.value || !!slots.error ? (openBlock(), createBlock("div", {
+                  key: 0,
+                  id: `${unref(ariaId)}-error`,
+                  class: ui.value.error({ class: props.ui?.error })
+                }, [
+                  renderSlot(_ctx.$slots, "error", { error: error.value }, () => [
+                    createTextVNode(toDisplayString(error.value), 1)
+                  ])
+                ], 10, ["id"])) : __props.help || !!slots.help ? (openBlock(), createBlock("div", {
+                  key: 1,
+                  id: `${unref(ariaId)}-help`,
+                  class: ui.value.help({ class: props.ui?.help })
+                }, [
+                  renderSlot(_ctx.$slots, "help", { help: __props.help }, () => [
+                    createTextVNode(toDisplayString(__props.help), 1)
+                  ])
+                ], 10, ["id"])) : createCommentVNode("", true)
+              ], 2)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$2 = _sfc_main$2.setup;
+_sfc_main$2.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/FormField.vue");
+  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+};
+const _sfc_main$1 = /* @__PURE__ */ defineComponent({
+  __name: "FooterView",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const columns = [
+      {
+        label: "Quick Links",
+        children: [
+          {
+            label: "About Mavrix",
+            to: "/about"
+            // target: '_blank'
+          },
+          {
+            label: "News & Media",
+            to: "/news"
+            // target: '_blank'
+          },
+          {
+            label: "Contact Us",
+            to: "/contact"
+            // target
+            // to: 'https://github.com/nuxt',
+            // target: '_blank'
+          },
+          {
+            label: "Map",
+            to: "/maps"
+            // target
+            // to: 'https://github.com/nuxt',
+            // target: '_blank'
+          }
+        ]
+      },
+      {
+        label: "Explore Mavrix",
+        children: [
+          {
+            label: "Developers",
+            to: "/"
+            // target: '_blank'
+          },
+          {
+            label: "Projects",
+            to: "/projects"
+            // target: '_blank'
+          },
+          {
+            label: "Area Guides",
+            to: "/"
+            // target: '_blank'
+          },
+          {
+            label: "Properties",
+            to: "/properties"
+            // target: '_blank'
+            // to: '/',
+            // target: '_blank'
+          }
+          // {
+          //   label: 'Nuxt UI',
+          //   to: 'https://ui.nuxt.com/',
+          //   target: '_blank'
+          // }
+        ]
+      },
+      {
+        label: "Explore Mavrix",
+        children: [
+          {
+            label: "Developers",
+            to: "/"
+            // target: '_blank'
+          },
+          {
+            label: "Projects",
+            to: "/projects"
+            // target: '_blank'
+          },
+          {
+            label: "Area Guides",
+            to: "/"
+            // target: '_blank'
+          }
+          // {
+          //   label: 'Nuxt UI',
+          //   to: 'https://ui.nuxt.com/',
+          //   target: '_blank'
+          // }
+        ]
+      }
+    ];
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UFooterColumns = _sfc_main$3;
+      const _component_UFormField = _sfc_main$2;
+      const _component_UInput = _sfc_main$b;
+      const _component_UButton = _sfc_main$c;
+      _push(`<section${ssrRenderAttrs(mergeProps({ class: "text-white max-w-7xl mx-auto max-sm:mx-8 mb-4" }, _attrs))}><div class="container mx-auto mb-6 border-b border-b-gray-500 pb-4"><img${ssrRenderAttr("src", _imports_0)} alt="Mavrix Luxury Properties Logo" class="h-10 w-auto"><p class="text-gray-400 mt-6"> Mavrix Luxury Properties — Elevating the Standard of Real Estate in Dubai. </p></div>`);
+      _push(ssrRenderComponent(_component_UFooterColumns, { columns }, {
+        right: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(ssrRenderComponent(_component_UFormField, {
+              name: "email",
+              label: "Subscribe to our newsletter",
+              size: "lg"
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(ssrRenderComponent(_component_UInput, {
+                    type: "email",
+                    class: "w-full",
+                    placeholder: "Enter your email",
+                    ui: {
+                      base: "input-mavrix"
+                    }
+                  }, {
+                    trailing: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        _push4(ssrRenderComponent(_component_UButton, {
+                          type: "submit",
+                          size: "xs",
+                          color: "neutral",
+                          label: "Subscribe",
+                          class: "button-mavrix"
+                        }, null, _parent4, _scopeId3));
+                      } else {
+                        return [
+                          createVNode(_component_UButton, {
+                            type: "submit",
+                            size: "xs",
+                            color: "neutral",
+                            label: "Subscribe",
+                            class: "button-mavrix"
+                          })
+                        ];
+                      }
+                    }),
+                    _: 1
+                  }, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode(_component_UInput, {
+                      type: "email",
+                      class: "w-full",
+                      placeholder: "Enter your email",
+                      ui: {
+                        base: "input-mavrix"
+                      }
+                    }, {
+                      trailing: withCtx(() => [
+                        createVNode(_component_UButton, {
+                          type: "submit",
+                          size: "xs",
+                          color: "neutral",
+                          label: "Subscribe",
+                          class: "button-mavrix"
+                        })
+                      ]),
+                      _: 1
+                    })
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(`<div class="mavrix-gradient-border p-6 shadow-sm border mt-4"${_scopeId}><p class="text-light text-gray-200 text-center"${_scopeId}>Share</p><div class="flex flex-row items-center justify-center gap-4 mt-4"${_scopeId}><div class="button-social-mavrix"${_scopeId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"${_scopeId}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"${_scopeId}></path></svg></div><div class="button-social-mavrix"${_scopeId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"${_scopeId}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"${_scopeId}></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"${_scopeId}></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"${_scopeId}></line></svg></div><div class="button-social-mavrix"${_scopeId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"${_scopeId}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"${_scopeId}></path><rect width="4" height="12" x="2" y="9"${_scopeId}></rect><circle cx="4" cy="4" r="2"${_scopeId}></circle></svg></div><div class="button-social-mavrix"${_scopeId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube"${_scopeId}><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"${_scopeId}></path><path d="m10 15 5-3-5-3z"${_scopeId}></path></svg></div><div class="button-social-mavrix"${_scopeId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter-icon lucide-twitter"${_scopeId}><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"${_scopeId}></path></svg></div></div></div>`);
+          } else {
+            return [
+              createVNode(_component_UFormField, {
+                name: "email",
+                label: "Subscribe to our newsletter",
+                size: "lg"
+              }, {
+                default: withCtx(() => [
+                  createVNode(_component_UInput, {
+                    type: "email",
+                    class: "w-full",
+                    placeholder: "Enter your email",
+                    ui: {
+                      base: "input-mavrix"
+                    }
+                  }, {
+                    trailing: withCtx(() => [
+                      createVNode(_component_UButton, {
+                        type: "submit",
+                        size: "xs",
+                        color: "neutral",
+                        label: "Subscribe",
+                        class: "button-mavrix"
+                      })
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              }),
+              createVNode("div", { class: "mavrix-gradient-border p-6 shadow-sm border mt-4" }, [
+                createVNode("p", { class: "text-light text-gray-200 text-center" }, "Share"),
+                createVNode("div", { class: "flex flex-row items-center justify-center gap-4 mt-4" }, [
+                  createVNode("div", { class: "button-social-mavrix" }, [
+                    (openBlock(), createBlock("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      class: "lucide lucide-facebook-icon lucide-facebook"
+                    }, [
+                      createVNode("path", { d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" })
+                    ]))
+                  ]),
+                  createVNode("div", { class: "button-social-mavrix" }, [
+                    (openBlock(), createBlock("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      class: "lucide lucide-instagram-icon lucide-instagram"
+                    }, [
+                      createVNode("rect", {
+                        width: "20",
+                        height: "20",
+                        x: "2",
+                        y: "2",
+                        rx: "5",
+                        ry: "5"
+                      }),
+                      createVNode("path", { d: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" }),
+                      createVNode("line", {
+                        x1: "17.5",
+                        x2: "17.51",
+                        y1: "6.5",
+                        y2: "6.5"
+                      })
+                    ]))
+                  ]),
+                  createVNode("div", { class: "button-social-mavrix" }, [
+                    (openBlock(), createBlock("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      class: "lucide lucide-linkedin-icon lucide-linkedin"
+                    }, [
+                      createVNode("path", { d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" }),
+                      createVNode("rect", {
+                        width: "4",
+                        height: "12",
+                        x: "2",
+                        y: "9"
+                      }),
+                      createVNode("circle", {
+                        cx: "4",
+                        cy: "4",
+                        r: "2"
+                      })
+                    ]))
+                  ]),
+                  createVNode("div", { class: "button-social-mavrix" }, [
+                    (openBlock(), createBlock("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      class: "lucide lucide-youtube-icon lucide-youtube"
+                    }, [
+                      createVNode("path", { d: "M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" }),
+                      createVNode("path", { d: "m10 15 5-3-5-3z" })
+                    ]))
+                  ]),
+                  createVNode("div", { class: "button-social-mavrix" }, [
+                    (openBlock(), createBlock("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      class: "lucide lucide-twitter-icon lucide-twitter"
+                    }, [
+                      createVNode("path", { d: "M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" })
+                    ]))
+                  ])
+                ])
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`<div class="container mx-auto mb-6"><p class="text-gray-200 mt-6 border-t border-t-gray-500 pt-4"> Mavrix Luxury Properties | © 2025 All Rights Reserved. </p></div></section>`);
+    };
+  }
+});
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/FooterView.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+const FooterView = Object.assign(_sfc_main$1, { __name: "FooterView" });
+const _sfc_main = /* @__PURE__ */ defineComponent({
+  __name: "default",
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_NavBar = _sfc_main$4;
+      _push(`<div${ssrRenderAttrs(_attrs)}>`);
+      _push(ssrRenderComponent(_component_NavBar, null, null, _parent));
+      _push(`<main>`);
+      ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+      _push(`</main>`);
+      _push(ssrRenderComponent(FooterView, null, null, _parent));
+      _push(`</div>`);
+    };
+  }
+});
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("layouts/default.vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+
+export { _sfc_main as default };
+//# sourceMappingURL=default-CU8N3674.mjs.map

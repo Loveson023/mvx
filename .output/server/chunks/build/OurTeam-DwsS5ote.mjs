@@ -1,0 +1,282 @@
+import { mergeProps, withCtx, unref, createVNode, toDisplayString, createBlock, openBlock, Fragment, renderList, createTextVNode, ref, useSSRContext } from 'vue';
+import { ssrRenderComponent, ssrRenderList, ssrRenderAttr, ssrInterpolate, ssrRenderAttrs, ssrRenderStyle } from 'vue/server-renderer';
+import { _ as _export_sfc } from './_plugin-vue_export-helper-1tPrXgE0.mjs';
+import { _ as _sfc_main$1$1 } from './InquiryForm-Bs-BTmqv.mjs';
+import { _ as __nuxt_component_0 } from './nuxt-link-D7qS_3ag.mjs';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { EffectCards, Navigation } from 'swiper/modules';
+import { a as agents } from './agents-D2hQc5FU.mjs';
+
+const _sfc_main$1 = {
+  __name: "AboutUsCounter",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const counters = ref([
+      { value: 30, label: "Languages" },
+      { value: 700, label: "Specialists" },
+      { value: 7e3, label: "Offers in the Database" },
+      { value: 14e3, label: "Number of Deals" }
+    ]);
+    const currentValues = ref([0, 0, 0, 0]);
+    const displayValue = (value, index) => currentValues.value[index];
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<section${ssrRenderAttrs(mergeProps({ class: "relative bg-black text-white py-24 overflow-hidden" }, _attrs))} data-v-d7105200><div class="absolute inset-0 bg-cover bg-center-no-repeat opacity-30 parallax-bg" style="${ssrRenderStyle({ backgroundImage: `url('/img_1.jpg')` })}" data-v-d7105200></div><div class="relative container mx-auto text-center px-6" data-v-d7105200><h2 class="text-3xl md:text-4xl uppercase font-light tracking-wider mb-16" data-v-d7105200> Our Impact in Numbers </h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 bg-black/40 mavrix-gradient-border border-gray-600 py-12 px-6 md:px-10 rounded-xl backdrop-blur-sm" data-v-d7105200><!--[-->`);
+      ssrRenderList(counters.value, (item, index) => {
+        _push(`<div class="flex flex-col items-center justify-center" data-v-d7105200><h3 class="text-4xl md:text-5xl font-light mb-2" data-v-d7105200>${ssrInterpolate(displayValue(item.value, index))}+ </h3><p class="text-sm tracking-widest uppercase text-gray-300" data-v-d7105200>${ssrInterpolate(item.label)}</p></div>`);
+      });
+      _push(`<!--]--></div></div></section>`);
+    };
+  }
+};
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/about-us/counter.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+const Counter = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-d7105200"]]);
+const _sfc_main = {
+  __name: "OurTeam",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const modules = [EffectCards, Navigation];
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UPageHero = _sfc_main$1$1;
+      const _component_NuxtLink = __nuxt_component_0;
+      _push(ssrRenderComponent(_component_UPageHero, mergeProps({
+        orientation: "horizontal",
+        class: "relative overflow-hidden px-6 md:px-16 p-0"
+      }, _attrs), {
+        headline: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<h3 class="uppercase mavrix-title text-mavrix" data-v-226f587a${_scopeId}> Our Team </h3>`);
+          } else {
+            return [
+              createVNode("h3", { class: "uppercase mavrix-title text-mavrix" }, " Our Team ")
+            ];
+          }
+        }),
+        title: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<h2 class="tracking-in-contract text-3xl uppercase font-light text-white mt-2 mb-4 tracking-tight mavrix-title" data-v-226f587a${_scopeId}> A Collective of Visionaries, Advisors, and Market Specialists </h2>`);
+          } else {
+            return [
+              createVNode("h2", { class: "tracking-in-contract text-3xl uppercase font-light text-white mt-2 mb-4 tracking-tight mavrix-title" }, " A Collective of Visionaries, Advisors, and Market Specialists ")
+            ];
+          }
+        }),
+        description: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<p class="text-base md:text-lg text-gray-300 max-w-2xl mt-3 mavrix-description" data-v-226f587a${_scopeId}> Behind Mavrix is a dynamic team of real estate professionals who redefine what it means to serve with excellence. Each member brings international experience, local expertise, and an unwavering commitment to transparency and trust. We listen before we lead — ensuring every recommendation aligns with your vision and financial goals. At Mavrix, our team doesn’t just sell properties. We shape real estate experiences that inspire confidence and connection. </p><div class="mt-8" data-v-226f587a${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_NuxtLink, {
+              class: "button-mavrix cursor-pointer",
+              type: "button",
+              to: "/agents"
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(` Meet Our Experts `);
+                } else {
+                  return [
+                    createTextVNode(" Meet Our Experts ")
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(`</div>`);
+          } else {
+            return [
+              createVNode("p", { class: "text-base md:text-lg text-gray-300 max-w-2xl mt-3 mavrix-description" }, " Behind Mavrix is a dynamic team of real estate professionals who redefine what it means to serve with excellence. Each member brings international experience, local expertise, and an unwavering commitment to transparency and trust. We listen before we lead — ensuring every recommendation aligns with your vision and financial goals. At Mavrix, our team doesn’t just sell properties. We shape real estate experiences that inspire confidence and connection. "),
+              createVNode("div", { class: "mt-8" }, [
+                createVNode(_component_NuxtLink, {
+                  class: "button-mavrix cursor-pointer",
+                  type: "button",
+                  to: "/agents"
+                }, {
+                  default: withCtx(() => [
+                    createTextVNode(" Meet Our Experts ")
+                  ]),
+                  _: 1
+                })
+              ])
+            ];
+          }
+        }),
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(ssrRenderComponent(unref(Swiper), {
+              effect: "cards",
+              grabCursor: true,
+              modules,
+              navigation: "",
+              "slides-per-view": 1,
+              "space-between": 10,
+              class: "mySwiper team-swiper"
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(`<!--[-->`);
+                  ssrRenderList(unref(agents), (agent) => {
+                    _push3(ssrRenderComponent(unref(SwiperSlide), {
+                      key: agent.slug
+                    }, {
+                      default: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(ssrRenderComponent(_component_NuxtLink, {
+                            to: `/agents/${agent.slug}`,
+                            class: "shadow-lg hover:shadow-xl transition-all duration-300 group"
+                          }, {
+                            default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                              if (_push5) {
+                                _push5(`<div class="relative h-100 overflow-hidden" data-v-226f587a${_scopeId4}><img${ssrRenderAttr("src", agent.image)}${ssrRenderAttr("alt", agent.name)} class="object-cover h-full w-full transform group-hover:scale-105 transition-transform duration-500" data-v-226f587a${_scopeId4}></div><div class="p-5 bg-gradient-to-t from-black/80 via-black/60 to-transparent -mt-24 backdrop-blur-2xl relative z-10" data-v-226f587a${_scopeId4}><h2 class="text-lg font-semibold" data-v-226f587a${_scopeId4}>${ssrInterpolate(agent.name)}</h2><p class="text-sm text-gray-300" data-v-226f587a${_scopeId4}>${ssrInterpolate(agent.title)}</p><p class="text-xs mt-2 text-gray-400" data-v-226f587a${_scopeId4}> Experience: ${ssrInterpolate(agent.experience)}</p><p class="text-xs text-gray-400" data-v-226f587a${_scopeId4}> Languages: ${ssrInterpolate(agent.languages.join(", "))}</p></div>`);
+                              } else {
+                                return [
+                                  createVNode("div", { class: "relative h-100 overflow-hidden" }, [
+                                    createVNode("img", {
+                                      src: agent.image,
+                                      alt: agent.name,
+                                      class: "object-cover h-full w-full transform group-hover:scale-105 transition-transform duration-500"
+                                    }, null, 8, ["src", "alt"])
+                                  ]),
+                                  createVNode("div", { class: "p-5 bg-gradient-to-t from-black/80 via-black/60 to-transparent -mt-24 backdrop-blur-2xl relative z-10" }, [
+                                    createVNode("h2", { class: "text-lg font-semibold" }, toDisplayString(agent.name), 1),
+                                    createVNode("p", { class: "text-sm text-gray-300" }, toDisplayString(agent.title), 1),
+                                    createVNode("p", { class: "text-xs mt-2 text-gray-400" }, " Experience: " + toDisplayString(agent.experience), 1),
+                                    createVNode("p", { class: "text-xs text-gray-400" }, " Languages: " + toDisplayString(agent.languages.join(", ")), 1)
+                                  ])
+                                ];
+                              }
+                            }),
+                            _: 2
+                          }, _parent4, _scopeId3));
+                        } else {
+                          return [
+                            createVNode(_component_NuxtLink, {
+                              to: `/agents/${agent.slug}`,
+                              class: "shadow-lg hover:shadow-xl transition-all duration-300 group"
+                            }, {
+                              default: withCtx(() => [
+                                createVNode("div", { class: "relative h-100 overflow-hidden" }, [
+                                  createVNode("img", {
+                                    src: agent.image,
+                                    alt: agent.name,
+                                    class: "object-cover h-full w-full transform group-hover:scale-105 transition-transform duration-500"
+                                  }, null, 8, ["src", "alt"])
+                                ]),
+                                createVNode("div", { class: "p-5 bg-gradient-to-t from-black/80 via-black/60 to-transparent -mt-24 backdrop-blur-2xl relative z-10" }, [
+                                  createVNode("h2", { class: "text-lg font-semibold" }, toDisplayString(agent.name), 1),
+                                  createVNode("p", { class: "text-sm text-gray-300" }, toDisplayString(agent.title), 1),
+                                  createVNode("p", { class: "text-xs mt-2 text-gray-400" }, " Experience: " + toDisplayString(agent.experience), 1),
+                                  createVNode("p", { class: "text-xs text-gray-400" }, " Languages: " + toDisplayString(agent.languages.join(", ")), 1)
+                                ])
+                              ]),
+                              _: 2
+                            }, 1032, ["to"])
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  });
+                  _push3(`<!--]-->`);
+                } else {
+                  return [
+                    (openBlock(true), createBlock(Fragment, null, renderList(unref(agents), (agent) => {
+                      return openBlock(), createBlock(unref(SwiperSlide), {
+                        key: agent.slug
+                      }, {
+                        default: withCtx(() => [
+                          createVNode(_component_NuxtLink, {
+                            to: `/agents/${agent.slug}`,
+                            class: "shadow-lg hover:shadow-xl transition-all duration-300 group"
+                          }, {
+                            default: withCtx(() => [
+                              createVNode("div", { class: "relative h-100 overflow-hidden" }, [
+                                createVNode("img", {
+                                  src: agent.image,
+                                  alt: agent.name,
+                                  class: "object-cover h-full w-full transform group-hover:scale-105 transition-transform duration-500"
+                                }, null, 8, ["src", "alt"])
+                              ]),
+                              createVNode("div", { class: "p-5 bg-gradient-to-t from-black/80 via-black/60 to-transparent -mt-24 backdrop-blur-2xl relative z-10" }, [
+                                createVNode("h2", { class: "text-lg font-semibold" }, toDisplayString(agent.name), 1),
+                                createVNode("p", { class: "text-sm text-gray-300" }, toDisplayString(agent.title), 1),
+                                createVNode("p", { class: "text-xs mt-2 text-gray-400" }, " Experience: " + toDisplayString(agent.experience), 1),
+                                createVNode("p", { class: "text-xs text-gray-400" }, " Languages: " + toDisplayString(agent.languages.join(", ")), 1)
+                              ])
+                            ]),
+                            _: 2
+                          }, 1032, ["to"])
+                        ]),
+                        _: 2
+                      }, 1024);
+                    }), 128))
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+          } else {
+            return [
+              createVNode(unref(Swiper), {
+                effect: "cards",
+                grabCursor: true,
+                modules,
+                navigation: "",
+                "slides-per-view": 1,
+                "space-between": 10,
+                class: "mySwiper team-swiper"
+              }, {
+                default: withCtx(() => [
+                  (openBlock(true), createBlock(Fragment, null, renderList(unref(agents), (agent) => {
+                    return openBlock(), createBlock(unref(SwiperSlide), {
+                      key: agent.slug
+                    }, {
+                      default: withCtx(() => [
+                        createVNode(_component_NuxtLink, {
+                          to: `/agents/${agent.slug}`,
+                          class: "shadow-lg hover:shadow-xl transition-all duration-300 group"
+                        }, {
+                          default: withCtx(() => [
+                            createVNode("div", { class: "relative h-100 overflow-hidden" }, [
+                              createVNode("img", {
+                                src: agent.image,
+                                alt: agent.name,
+                                class: "object-cover h-full w-full transform group-hover:scale-105 transition-transform duration-500"
+                              }, null, 8, ["src", "alt"])
+                            ]),
+                            createVNode("div", { class: "p-5 bg-gradient-to-t from-black/80 via-black/60 to-transparent -mt-24 backdrop-blur-2xl relative z-10" }, [
+                              createVNode("h2", { class: "text-lg font-semibold" }, toDisplayString(agent.name), 1),
+                              createVNode("p", { class: "text-sm text-gray-300" }, toDisplayString(agent.title), 1),
+                              createVNode("p", { class: "text-xs mt-2 text-gray-400" }, " Experience: " + toDisplayString(agent.experience), 1),
+                              createVNode("p", { class: "text-xs text-gray-400" }, " Languages: " + toDisplayString(agent.languages.join(", ")), 1)
+                            ])
+                          ]),
+                          _: 2
+                        }, 1032, ["to"])
+                      ]),
+                      _: 2
+                    }, 1024);
+                  }), 128))
+                ]),
+                _: 1
+              })
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/OurTeam.vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+const OurTeam = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-226f587a"]]);
+
+export { Counter as C, OurTeam as O };
+//# sourceMappingURL=OurTeam-DwsS5ote.mjs.map

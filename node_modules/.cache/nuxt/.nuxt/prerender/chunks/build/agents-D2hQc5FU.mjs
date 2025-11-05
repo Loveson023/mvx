@@ -1,0 +1,117 @@
+const agents = [
+  {
+    id: 1,
+    slug: "nathan-alvarez",
+    name: "Nathan Alvarez",
+    title: "Luxury Property Advisor",
+    email: "nathan.alvarez@mavrix.ae",
+    phone: "+1 212 555 4389",
+    whatsapp: "12125554389",
+    specialization: "Luxury Villas",
+    experience: "13 years",
+    languages: ["English", "Spanish"],
+    image: "/images/agents/member.jpg",
+    bio: "Nathan has built a reputation for helping clients secure exclusive villas in high-end communities. With over a decade of experience, he combines negotiation skills with unmatched local knowledge."
+  },
+  {
+    id: 2,
+    slug: "layla-hassan",
+    name: "Layla Hassan",
+    title: "Senior Property Consultant",
+    email: "layla.hassan@mavrix.ae",
+    phone: "+44 20 7946 2120",
+    whatsapp: "442079462120",
+    specialization: "Apartments",
+    experience: "9 years",
+    languages: ["English", "Arabic", "French"],
+    image: "/images/agents/member.jpg",
+    bio: "Layla specializes in apartment sales and rentals. Known for her client-first approach, she ensures every buyer and tenant finds a property that perfectly fits their lifestyle."
+  },
+  {
+    id: 3,
+    slug: "amir-shah",
+    name: "Amir Shah",
+    title: "Investment Specialist",
+    email: "amir.shah@mavrix.ae",
+    phone: "+1 646 320 9921",
+    whatsapp: "16463209921",
+    specialization: "Off-plan Projects",
+    experience: "11 years",
+    languages: ["English", "Urdu"],
+    image: "/images/agents/member.jpg",
+    bio: "Amir focuses on off-plan developments and investment properties. His analytical mindset helps clients make strategic, data-driven decisions for long-term gains."
+  },
+  {
+    id: 4,
+    slug: "sofia-keller",
+    name: "Sofia Keller",
+    title: "Property Consultant",
+    email: "sofia.keller@mavrix.ae",
+    phone: "+49 30 5683 7745",
+    whatsapp: "493056837745",
+    specialization: "Townhouses",
+    experience: "7 years",
+    languages: ["English", "German"],
+    image: "/images/agents/member.jpg",
+    bio: "Sofia specializes in family-friendly townhouse communities. Her warm personality and detailed market insights make her a trusted advisor for families relocating or upgrading."
+  },
+  {
+    id: 5,
+    slug: "omar-nasri",
+    name: "Omar Nasri",
+    title: "Commercial Property Expert",
+    email: "omar.nasri@mavrix.ae",
+    phone: "+33 1 8787 6621",
+    whatsapp: "33187876621",
+    specialization: "Commercial Properties",
+    experience: "10 years",
+    languages: ["English", "Arabic", "French"],
+    image: "/images/agents/member.jpg",
+    bio: "Omar is an expert in leasing and selling commercial spaces. His corporate background gives him a solid grasp of business needs and investment potential."
+  },
+  {
+    id: 6,
+    slug: "isabella-rossi",
+    name: "Isabella Rossi",
+    title: "Client Relationship Manager",
+    email: "isabella.rossi@mavrix.ae",
+    phone: "+39 06 9835 2221",
+    whatsapp: "390698352221",
+    specialization: "Luxury Rentals",
+    experience: "8 years",
+    languages: ["English", "Italian"],
+    image: "/images/agents/member.jpg",
+    bio: "Isabella manages luxury rental portfolios and is admired for her ability to match clients with homes that reflect their lifestyle and taste."
+  },
+  {
+    id: 7,
+    slug: "daniel-nguyen",
+    name: "Daniel Nguyen",
+    title: "Real Estate Strategist",
+    email: "daniel.nguyen@mavrix.ae",
+    phone: "+61 2 9345 8711",
+    whatsapp: "61293458711",
+    specialization: "Investment Properties",
+    experience: "12 years",
+    languages: ["English", "Vietnamese"],
+    image: "/images/agents/member.jpg",
+    bio: "Daniel combines a strong background in finance with deep real estate expertise. He advises investors on how to identify and acquire undervalued assets."
+  },
+  {
+    id: 8,
+    slug: "hana-tanaka",
+    name: "Hana Tanaka",
+    title: "Property Advisor",
+    email: "hana.tanaka@mavrix.ae",
+    phone: "+81 3 6659 1198",
+    whatsapp: "81366591198",
+    specialization: "Beachfront Properties",
+    experience: "6 years",
+    languages: ["English", "Japanese"],
+    image: "/images/agents/member.jpg",
+    bio: "Hana specializes in beachfront developments and seaview homes. Her calm, thoughtful approach makes her a favorite among international clients seeking tranquil living spaces."
+  }
+];
+
+export { agents as a };
+//# sourceMappingURL=agents-D2hQc5FU.mjs.map

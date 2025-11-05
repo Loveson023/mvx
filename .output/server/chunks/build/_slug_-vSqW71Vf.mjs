@@ -1,0 +1,59 @@
+import { ref, mergeProps, unref, useSSRContext } from 'vue';
+import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr } from 'vue/server-renderer';
+import { useRoute } from 'vue-router';
+import { D as Divider } from './divider-CD-0niJo.mjs';
+import '../_/nitro.mjs';
+import 'node:http';
+import 'node:https';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:url';
+import '@iconify/utils';
+import 'node:crypto';
+import 'consola';
+import 'node:path';
+import 'better-sqlite3';
+import 'ipx';
+import './_plugin-vue_export-helper-1tPrXgE0.mjs';
+
+const _sfc_main = {
+  __name: "[slug]",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const route = useRoute();
+    const slug = route.params.slug;
+    const properties = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<section${ssrRenderAttrs(mergeProps({ class: "pt-20 pb-16 text-white max-w-7xl mx-auto px-6 lg:px-12" }, _attrs))}>`);
+      _push(ssrRenderComponent(Divider, null, null, _parent));
+      _push(`<h1 class="text-3xl md:text-4xl font-light uppercase mb-10">${ssrInterpolate(unref(slug).replace("-", " "))}</h1>`);
+      if (loading.value) {
+        _push(`<div class="text-center text-gray-400 py-20"> Loading properties... </div>`);
+      } else if (error.value) {
+        _push(`<div class="text-center text-red-400 py-20">${ssrInterpolate(error.value)}</div>`);
+      } else if (properties.value.length > 0) {
+        _push(`<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"><!--[-->`);
+        ssrRenderList(properties.value, (property) => {
+          _push(`<div class="bg-neutral-900 rounded-xl overflow-hidden hover:shadow-xl transition-all"><img${ssrRenderAttr("src", property.image_path || "/placeholder.jpg")}${ssrRenderAttr("alt", property.title)} class="h-64 w-full object-cover"><div class="p-5"><h2 class="text-lg font-semibold">${ssrInterpolate(property.title)}</h2><p class="text-sm text-gray-400">${ssrInterpolate(property.location)}</p><p class="text-sm mt-2 text-gray-300"> AED ${ssrInterpolate(property.price?.toLocaleString())}</p></div></div>`);
+        });
+        _push(`<!--]--></div>`);
+      } else {
+        _push(`<div class="text-center mt-16 bg-neutral-900 rounded-2xl py-10 border border-neutral-800"><h2 class="text-2xl font-light text-gray-300">No properties found in this category.</h2></div>`);
+      }
+      _push(ssrRenderComponent(Divider, null, null, _parent));
+      _push(`</section>`);
+    };
+  }
+};
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/categories/[slug].vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+
+export { _sfc_main as default };
+//# sourceMappingURL=_slug_-vSqW71Vf.mjs.map

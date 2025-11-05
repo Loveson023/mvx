@@ -1,0 +1,1 @@
+function r(e){return(e.location?.full_path||e.title||"property").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)+/g,"")+"-"+e.ref_number}function a(e){if(typeof e=="object"&&Array.isArray(e)&&(e=e.join("-")),typeof e!="string")return"";const t=e.match(/(\d+)(?!.*\d)/);return t?t[0]:""}export{r as c,a as e};

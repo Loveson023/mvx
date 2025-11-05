@@ -1,0 +1,105 @@
+import { computed, mergeProps, unref, createVNode, resolveDynamicComponent, useSSRContext } from 'vue';
+import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderVNode } from 'vue/server-renderer';
+import { useRoute } from 'vue-router';
+import { P as PropertyGallery } from './PropertyGallery-CBco0del.mjs';
+import { D as Divider } from './divider-CD-0niJo.mjs';
+import { B as Breadcrumbs } from './breadcrumbs-xT8jGMeU.mjs';
+import { p as properties } from './properties-5a0AL7Gl.mjs';
+import { MapPinHouse, Building2, Waves, Shield, Dumbbell, MessageCircle, Mail } from 'lucide-vue-next';
+import 'embla-carousel-vue';
+import 'reka-ui';
+import '@vueuse/core';
+import './useLocale-DNEMYcP0.mjs';
+import './index-3UlAPwuq.mjs';
+import '../_/nitro.mjs';
+import 'node:http';
+import 'node:https';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:url';
+import '@iconify/utils';
+import 'node:crypto';
+import 'consola';
+import 'node:path';
+import 'better-sqlite3';
+import 'ipx';
+import './tv-Dyxj8f8C.mjs';
+import 'tailwind-variants';
+import './server.mjs';
+import 'tailwindcss/colors';
+import '@iconify/vue';
+import '../routes/renderer.mjs';
+import 'vue-bundle-renderer/runtime';
+import 'unhead/server';
+import 'devalue';
+import 'unhead/plugins';
+import 'unhead/utils';
+import './Button-DdQxHajf.mjs';
+import './Avatar-BMtAh9aM.mjs';
+import './NuxtImg-D9WVKGOy.mjs';
+import './Icon-BXHY_Wln.mjs';
+import './index-BifeFrQR.mjs';
+import '@iconify/utils/lib/css/icon';
+import './asyncData-DzZ9Lhv5.mjs';
+import './useFormField-WbuSM5T2.mjs';
+import './Link-CYf1dq5X.mjs';
+import './nuxt-link-D7qS_3ag.mjs';
+import './_plugin-vue_export-helper-1tPrXgE0.mjs';
+
+const _sfc_main = {
+  __name: "[slug]",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const route = useRoute();
+    const property = computed(() => properties.find((p) => p.slug === route.params.slug));
+    const featureIcons = {
+      "Shared gym": Dumbbell,
+      "Security": Shield,
+      "Shared swimming pool": Waves,
+      "Balcony": Building2
+    };
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "container mx-auto px-4 py-10" }, _attrs))}>`);
+      _push(ssrRenderComponent(Divider, null, null, _parent));
+      _push(`<div class="flex items-start">`);
+      _push(ssrRenderComponent(Breadcrumbs, null, null, _parent));
+      _push(`</div>`);
+      if (unref(property)) {
+        _push(`<div class="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-6"><div class="lg:col-span-2">`);
+        _push(ssrRenderComponent(PropertyGallery, {
+          images: unref(property).images
+        }, null, _parent));
+        _push(`<div class="mt-6 border-b pb-4"><h1 class="text-3xl font-extralight my-4">${ssrInterpolate(unref(property).title)}</h1><div class="flex flex-row gap-2 my-4">`);
+        _push(ssrRenderComponent(unref(MapPinHouse), null, null, _parent));
+        _push(`<p class="text-gray-200">${ssrInterpolate(unref(property).location)}</p></div></div><div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6"><div class="border p-4 text-center"><p class="text-sm text-gray-500">Price</p><p class="text-lg font-semibold">${ssrInterpolate(unref(property).currency)} ${ssrInterpolate(unref(property).price.toLocaleString())}</p></div><div class="border p-4 text-center"><p class="text-sm text-gray-500">Bedrooms</p><p class="text-lg font-semibold">${ssrInterpolate(unref(property).bedrooms)}</p></div><div class="border p-4 text-center"><p class="text-sm text-gray-500">Bathrooms</p><p class="text-lg font-semibold">${ssrInterpolate(unref(property).bathrooms)}</p></div><div class="border p-4 text-center"><p class="text-sm text-gray-500">Area</p><p class="text-lg font-semibold">${ssrInterpolate(unref(property).areaSqFt)} ft²</p></div></div><div class="border-b pb-4 mt-10"><h2 class="text-2xl font-semibold mb-3">Description</h2><p class="text-gray-200 leading-relaxed whitespace-pre-line">${ssrInterpolate(unref(property).description)}</p></div><div class="flex flex-wrap gap-3 mt-10 border-b pb-4"><h2 class="text-2xl font-semibold mb-3">Features &amp; Amenities</h2><div class="flex flex-wrap gap-3"><!--[-->`);
+        ssrRenderList(unref(property).features, (feature, i) => {
+          _push(`<div class="flex items-center gap-2 border border-gray-700 text-gray-200 text-sm px-3 py-2 bg-gray-900/40 hover:bg-gray-800/60 transition">`);
+          ssrRenderVNode(_push, createVNode(resolveDynamicComponent(featureIcons[feature]), { class: "w-4 h-4 text-[#AF7554]" }, null), _parent);
+          _push(`<span>${ssrInterpolate(feature)}</span></div>`);
+        });
+        _push(`<!--]--></div></div><div class="mt-10 border-b pb-4"><h2 class="text-2xl font-semibold mb-3">Listing Details</h2><ul class="grid sm:grid-cols-2 gap-y-3 text-gray-700"><li><strong>Location:</strong> ${ssrInterpolate(unref(property).listingDetails.location)}</li><li><strong>Reference No:</strong> ${ssrInterpolate(unref(property).listingDetails.referenceNo)}</li><li><strong>Price per SqFt:</strong> ${ssrInterpolate(unref(property).listingDetails.pricePerSqFt)}</li><li><strong>Furnishing:</strong> ${ssrInterpolate(unref(property).listingDetails.furnishing)}</li><li><strong>Property Type:</strong> ${ssrInterpolate(unref(property).listingDetails.propertyType)}</li><li><strong>Parking Lots:</strong> ${ssrInterpolate(unref(property).listingDetails.parkingLots)}</li></ul></div><div class="mt-10"><h2 class="text-2xl font-semibold mb-3">Nearby Schools</h2><ul class="divide-y divide-gray-100 grid grid-cols-2"><!--[-->`);
+        ssrRenderList(unref(property).nearbySchools, (school, i) => {
+          _push(`<li class="py-3"><strong>${ssrInterpolate(school.name)}</strong><p class="text-gray-600 text-sm">${ssrInterpolate(school.address)}</p><p class="text-gray-500 text-xs">Distance: ${ssrInterpolate(school.distance)}</p></li>`);
+        });
+        _push(`<!--]--></ul></div><div class="mt-10 border-t pt-6"><h2 class="text-2xl font-semibold mb-3">Market Comparison</h2><div class="grid sm:grid-cols-2 gap-6"><div class="mavrix-gradient-border p-4 rounded-lg"><p><strong>This Property:</strong> ${ssrInterpolate(unref(property).comparison.thisPropertyPricePerSqFt)} AED/sqft</p><p><strong>Market Avg:</strong> ${ssrInterpolate(unref(property).comparison.marketAveragePricePerSqFt)} AED/sqft</p><p><strong>Difference:</strong> ${ssrInterpolate(unref(property).comparison.difference)}</p></div><div class="mavrix-gradient-border p-4 rounded-lg"><p><strong>This Area:</strong> ${ssrInterpolate(unref(property).comparison.thisPropertyAreaSqFt)} ft²</p><p><strong>Average Area:</strong> ${ssrInterpolate(unref(property).comparison.averageAreaSqFt)} ft²</p><p><strong>Area Diff:</strong> ${ssrInterpolate(unref(property).comparison.areaDifference)}</p></div></div></div></div><aside class="lg:col-span-1 relative"><div class="sticky top-28 space-y-6"><div class="mavrix-gradient-border p-6 shadow-sm border"><p class="text-sm text-gray-200">Price</p><h2 class="text-2xl font-bold text-gray-200 mb-2">${ssrInterpolate(unref(property).currency)} ${ssrInterpolate(unref(property).price.toLocaleString())}</h2><p class="text-sm text-gray-200">(${ssrInterpolate(unref(property).pricePerSqFt)} AED/sqft)</p></div><div class="mavrix-gradient-border p-6 border shadow-sm"><div class="flex items-center gap-4"><img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Agent" class="w-14 h-14 rounded-full object-cover"><div><p class="font-semibold">${ssrInterpolate(unref(property).agent.name)}</p><p class="text-sm text-gray-200">${ssrInterpolate(unref(property).agent.position)}</p></div></div><div class="mt-5 flex flex-col gap-3"><button class="button-mavrix">${ssrInterpolate(unref(property).agent.contact.phone)}</button><button class="button-mavrix-outline">${ssrInterpolate(unref(property).agent.contact.whatsapp)}</button></div></div><div class="mavrix-gradient-border p-6 shadow-sm border"><p class="text-light text-gray-200 text-center">Share</p><div class="flex flex-row items-center justify-center gap-4 mt-4"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></div><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></div><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></div><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg></div><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter-icon lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></div>`);
+        _push(ssrRenderComponent(unref(MessageCircle), null, null, _parent));
+        _push(ssrRenderComponent(unref(Mail), null, null, _parent));
+        _push(`</div></div></div></aside></div>`);
+      } else {
+        _push(`<div class="text-center text-gray-500 py-20"> Property not found. </div>`);
+      }
+      _push(ssrRenderComponent(Divider, null, null, _parent));
+      _push(`</div>`);
+    };
+  }
+};
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/properties/[slug].vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+
+export { _sfc_main as default };
+//# sourceMappingURL=_slug_-DPiQ2mpO.mjs.map

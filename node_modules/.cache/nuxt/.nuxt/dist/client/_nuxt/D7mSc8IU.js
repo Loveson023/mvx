@@ -1,0 +1,1 @@
+import{t as e,a as m}from"./CBK744UT.js";import{c as a}from"#entry";function I(o,r=Number.NEGATIVE_INFINITY,t=Number.POSITIVE_INFINITY){return Math.min(t,Math.max(r,o))}function s(o){return a(()=>e(o)?!!m(o)?.closest("form"):!0)}export{I as c,s as u};
