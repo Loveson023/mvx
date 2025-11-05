@@ -1,0 +1,1 @@
+export { default } from "file:///E:/VUE/Mavrix_Properties/ui/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
